@@ -7,7 +7,8 @@ import { runShellLine, shellPathForView } from "./shellExec";
 function initialMotd(): string[] {
   return [
     `${site.name} — ${site.role}`,
-    `逻辑路径与上方内容区同步；输入 help 查看 ls / cd / cat / grep / find。`,
+    `逻辑路径与上方内容区同步；除链接/按钮/输入框外，点击任意处可聚焦命令行。`,
+    `输入 help 查看 ls / cd / cat / grep / find。`,
     "",
   ];
 }
@@ -22,6 +23,7 @@ export function ShellTerminal({ menuView, goMenu }: Props) {
   const [lines, setLines] = useState<string[]>(() => initialMotd());
   const [input, setInput] = useState("");
   const outRef = useRef<HTMLPreElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const prompt = useCallback(
     () =>
@@ -34,6 +36,21 @@ export function ShellTerminal({ menuView, goMenu }: Props) {
     if (!el) return;
     el.scrollTop = el.scrollHeight;
   }, [lines]);
+
+  useEffect(() => {
+    const interactive =
+      "a, button, input, textarea, select, summary, option, label, [contenteditable=\"true\"], [role=\"button\"], [role=\"tab\"]";
+
+    const onWindowClick = (e: MouseEvent) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      if (t.closest(interactive)) return;
+      inputRef.current?.focus({ preventScroll: true });
+    };
+
+    window.addEventListener("click", onWindowClick);
+    return () => window.removeEventListener("click", onWindowClick);
+  }, []);
 
   const run = useCallback(
     (raw: string) => {
@@ -81,6 +98,7 @@ export function ShellTerminal({ menuView, goMenu }: Props) {
           {prompt()}
         </span>
         <input
+          ref={inputRef}
           id="site-shell-input"
           className="site-shell__input"
           type="text"
@@ -93,7 +111,8 @@ export function ShellTerminal({ menuView, goMenu }: Props) {
         />
       </form>
       <p className="site-shell__hint" aria-hidden="true">
-        快捷：help / ls / cd ~ / cd blog / pwd / cat README / grep 关键词 / find .
+        点击页面（非链接/按钮）聚焦此处 · help / ls / cd ~ / pwd / cat README / grep
+        / find .
       </p>
     </div>
   );
