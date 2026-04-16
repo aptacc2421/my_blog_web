@@ -1,17 +1,18 @@
 /**
- * 氛围由 body[data-atmosphere] 切换（与 React 同步，避免只写在 html 上不生效）。
- * 图片层：可在对应 body[data-atmosphere="…"] 上加 url("/bg/xxx.jpg")。
+ * 每层背景：底层为 /public/bg/*.svg（可换成你自己的 JPG/WebP，见 public/bg/HOW_TO_REPLACE.txt）
+ * 上面叠渐变压暗，避免挡正文。
  */
 
 body[data-atmosphere="default"] {
-  background-color: var(--bg);
+  background-color: #030508;
   background-image:
-    radial-gradient(ellipse 120% 55% at 50% -15%, var(--tokyo-blue), transparent 52%),
-    radial-gradient(ellipse 80% 45% at 85% 95%, rgba(212, 168, 75, 0.12), transparent 45%),
-    radial-gradient(ellipse 55% 40% at 15% 88%, rgba(120, 22, 38, 0.18), transparent 42%),
-    radial-gradient(ellipse 900px 380px at 50% 0%, rgba(57, 255, 122, 0.08), transparent 50%),
-    linear-gradient(175deg, #070910 0%, var(--bg) 42%, #040508 100%);
-  background-attachment: fixed;
+    radial-gradient(ellipse 100% 70% at 50% 0%, rgba(62, 232, 154, 0.08), transparent 50%),
+    linear-gradient(180deg, rgba(5, 9, 14, 0.82) 0%, rgba(2, 4, 8, 0.94) 100%),
+    url("/bg/default.svg");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
 }
 
 body[data-atmosphere="default"]::before {
@@ -28,10 +29,13 @@ body[data-atmosphere="default"]::before {
 body[data-atmosphere="storm"] {
   background-color: #020408;
   background-image:
-    radial-gradient(ellipse 100% 50% at 50% -10%, rgba(50, 75, 110, 0.5), transparent 55%),
-    radial-gradient(ellipse 70% 55% at 10% 100%, rgba(15, 28, 48, 0.65), transparent 50%),
-    linear-gradient(180deg, #03050a 0%, #010204 100%);
-  background-attachment: fixed;
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(80, 120, 170, 0.25), transparent 55%),
+    linear-gradient(180deg, rgba(3, 6, 12, 0.88) 0%, rgba(1, 2, 6, 0.95) 100%),
+    url("/bg/storm.svg");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
 }
 
 body[data-atmosphere="storm"]::before {
@@ -46,17 +50,19 @@ body[data-atmosphere="storm"]::before {
 }
 
 body[data-atmosphere="midsummer"] {
-  background-color: #0c0804;
+  background-color: #0a0604;
   background-image:
-    radial-gradient(ellipse 90% 60% at 20% -5%, rgba(255, 200, 90, 0.28), transparent 50%),
-    radial-gradient(ellipse 70% 50% at 95% 20%, rgba(255, 120, 50, 0.16), transparent 45%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(30, 18, 12, 0.9), transparent 55%),
-    linear-gradient(165deg, #140e08 0%, #080604 55%, #030201 100%);
-  background-attachment: fixed;
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255, 200, 90, 0.2), transparent 50%),
+    linear-gradient(180deg, rgba(18, 10, 6, 0.75) 0%, rgba(4, 2, 2, 0.92) 100%),
+    url("/bg/midsummer.svg");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
 }
 
 body[data-atmosphere="midsummer"]::before {
-  opacity: 0.07;
+  opacity: 0.08;
   background-image: repeating-linear-gradient(
     -18deg,
     transparent,
@@ -67,13 +73,15 @@ body[data-atmosphere="midsummer"]::before {
 }
 
 body[data-atmosphere="redwell"] {
-  background-color: #040102;
+  background-color: #030101;
   background-image:
-    radial-gradient(ellipse 50% 48% at 50% 58%, rgba(130, 18, 36, 0.55), transparent 62%),
-    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(25, 4, 8, 0.95), transparent 55%),
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(50, 15, 22, 0.45), transparent 50%),
-    linear-gradient(180deg, #0a0506 0%, #020101 100%);
-  background-attachment: fixed;
+    radial-gradient(ellipse 55% 50% at 50% 58%, rgba(90, 10, 22, 0.5), transparent 62%),
+    linear-gradient(180deg, rgba(10, 2, 4, 0.85) 0%, rgba(2, 0, 1, 0.96) 100%),
+    url("/bg/redwell.svg");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
 }
 
 body[data-atmosphere="redwell"]::before {
@@ -88,18 +96,15 @@ body[data-atmosphere="redwell"]::before {
 }
 
 body[data-atmosphere="window"] {
-  background-color: #06070c;
+  background-color: #05060a;
   background-image:
-    linear-gradient(
-      180deg,
-      rgba(255, 248, 235, 0.1) 0%,
-      rgba(255, 248, 235, 0.03) 10%,
-      transparent 18%
-    ),
-    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(255, 190, 120, 0.12), transparent 50%),
-    radial-gradient(ellipse 80% 50% at 0% 50%, rgba(70, 95, 130, 0.16), transparent 45%),
-    linear-gradient(95deg, #05060b 0%, #0b0d14 40%, #080a10 100%);
-  background-attachment: fixed;
+    linear-gradient(180deg, rgba(255, 250, 240, 0.08) 0%, transparent 22%),
+    linear-gradient(95deg, rgba(6, 8, 14, 0.82) 0%, rgba(4, 6, 10, 0.92) 100%),
+    url("/bg/window.svg");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
 }
 
 body[data-atmosphere="window"]::before {

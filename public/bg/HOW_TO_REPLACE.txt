@@ -1,0 +1,5 @@
+Replace any default.svg / storm.svg / midsummer.svg / redwell.svg / window.svg
+with your own JPG or WebP (rename to same .svg extension is not required).
+
+If you use new filenames, edit src/themes.css: search for url("/bg/
+and point each body[data-atmosphere="…"] to your file.

@@ -1,6 +1,3 @@
-/** 本地存储键 */
-export const ATMOSPHERE_STORAGE_KEY = "my_blog_web_atmosphere";
-
 export type AtmosphereId =
   | "default"
   | "storm"

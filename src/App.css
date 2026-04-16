@@ -207,6 +207,19 @@
   color: var(--phosphor);
 }
 
+.menu-main {
+  min-height: min(68vh, 640px);
+}
+
+.menu-panel.section--solo {
+  border-top: none;
+  padding-top: 0.35rem;
+}
+
+.hero--solo {
+  padding-top: 0.35rem;
+}
+
 .hero {
   padding: 1.25rem 0 1.75rem;
   display: grid;
@@ -637,4 +650,106 @@
 .footer a:hover {
   color: var(--phosphor);
   text-shadow: var(--glow);
+}
+
+.footer__btn {
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+.footer__btn:hover {
+  color: var(--phosphor);
+  text-shadow: var(--glow);
+}
+
+.blog-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 720px) {
+  .blog-layout {
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.blog-index {
+  border: 1px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.5rem 0.45rem;
+}
+
+.blog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-list li + li {
+  margin-top: 0.25rem;
+}
+
+.blog-list__btn {
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.4rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.blog-list__btn:hover {
+  color: var(--phosphor);
+  border-color: var(--border-dim);
+}
+
+.blog-list__btn--on {
+  color: var(--phosphor);
+  border-color: var(--border);
+  background: rgba(57, 255, 122, 0.06);
+}
+
+.blog-list__date {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.blog-empty,
+.blog-placeholder {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.blog-article {
+  border: 1px solid var(--border-dim);
+  background: rgba(0, 0, 0, 0.28);
+  padding: 0.75rem 0.85rem;
+  min-height: 12rem;
+}
+
+.blog-body :is(h1, h2, h3) {
+  font-family: var(--font-ui);
+  color: var(--text);
+}
+
+.blog-body a {
+  color: var(--gold);
+}
+
+.blog-md-fallback {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.82rem;
 }
