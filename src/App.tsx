@@ -2,11 +2,32 @@ import { useLayoutEffect, useState } from "react";
 import "./App.css";
 import { site } from "./site";
 import {
+  ATMOSPHERE_ORDER,
   ATMOSPHERE_STORAGE_KEY,
-  atmospheres,
+  getAtmosphereDef,
   isAtmosphereId,
   type AtmosphereId,
 } from "./themes";
+
+function TermBanner({ id }: { id: AtmosphereId }) {
+  const { banner } = getAtmosphereDef(id);
+  return (
+    <pre
+      className="term-banner"
+      aria-hidden="true"
+    >
+      {banner.map((line, i) => (
+        <span
+          key={i}
+          className="term-banner__line"
+          style={{ color: line.color }}
+        >
+          {line.text}
+        </span>
+      ))}
+    </pre>
+  );
+}
 
 function readAtmosphere(): AtmosphereId {
   try {
@@ -24,7 +45,7 @@ function App() {
   const [atmosphere, setAtmosphere] = useState<AtmosphereId>(readAtmosphere);
 
   useLayoutEffect(() => {
-    document.documentElement.dataset.atmosphere = atmosphere;
+    document.body.dataset.atmosphere = atmosphere;
   }, [atmosphere]);
 
   const onAtmosphereChange = (id: string) => {
@@ -54,27 +75,34 @@ function App() {
         </div>
       </nav>
 
+      <div className="atm-toolbar" role="tablist" aria-label="切换背景氛围">
+        <span className="atm-toolbar__prompt" aria-hidden="true">
+          $ theme --set
+        </span>
+        <div className="atm-toolbar__tabs">
+          {ATMOSPHERE_ORDER.map((id) => (
+            <button
+              type="button"
+              key={id}
+              role="tab"
+              aria-selected={atmosphere === id}
+              className={
+                atmosphere === id ? "atm-tab atm-tab--active" : "atm-tab"
+              }
+              onClick={() => onAtmosphereChange(id)}
+            >
+              [{getAtmosphereDef(id).tab}]
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="frame" role="presentation">
         <div className="frame__bar">
           <span className="frame__bar-left">
             <strong>{system.name}</strong> // v{system.version} //{" "}
             <span className="frame__ok">ok</span>
           </span>
-          <label className="theme-picker">
-            <span className="theme-picker__label">氛围</span>
-            <select
-              className="theme-picker__select"
-              value={atmosphere}
-              onChange={(e) => onAtmosphereChange(e.target.value)}
-              aria-label="切换页面背景氛围"
-            >
-              {atmospheres.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.label}
-                </option>
-              ))}
-            </select>
-          </label>
           <span className="frame__dots" aria-hidden="true">
             <span />
             <span />
@@ -82,6 +110,7 @@ function App() {
           </span>
         </div>
         <div className="frame__body">
+          <TermBanner id={atmosphere} />
           <div className="window-horizon" aria-hidden="true" />
 
           <main id="top">
@@ -136,7 +165,9 @@ function App() {
                 <h2 id="about-title" className="section__title">
                   $ cat ./about.md
                 </h2>
-                <p className="section__hint">顶部「氛围」切换背景；此处为正文。</p>
+                <p className="section__hint">
+                  顶部横向 `[TAB]` 切换背景与标题画；此处为正文。
+                </p>
               </div>
               <div className="grid-2">
                 <div className="prose">

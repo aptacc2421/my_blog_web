@@ -1,115 +1,114 @@
 /**
- * 氛围 = 背景层（渐变 / 雨丝 / 色相），由 html[data-atmosphere] 切换。
- * 若要「图片背景」：任选 id 下增加
- *   html[data-atmosphere="xxx"] body { background-image: url("/bg/your.jpg"), ... }
- * 并把图片放到 public/bg/
+ * 氛围由 body[data-atmosphere] 切换（与 React 同步，避免只写在 html 上不生效）。
+ * 图片层：可在对应 body[data-atmosphere="…"] 上加 url("/bg/xxx.jpg")。
  */
 
-html[data-atmosphere="default"] body {
+body[data-atmosphere="default"] {
   background-color: var(--bg);
   background-image:
     radial-gradient(ellipse 120% 55% at 50% -15%, var(--tokyo-blue), transparent 52%),
-    radial-gradient(ellipse 80% 45% at 85% 95%, rgba(212, 168, 75, 0.09), transparent 45%),
-    radial-gradient(ellipse 55% 40% at 15% 88%, rgba(120, 22, 38, 0.14), transparent 42%),
-    radial-gradient(ellipse 900px 380px at 50% 0%, rgba(57, 255, 122, 0.05), transparent 50%),
+    radial-gradient(ellipse 80% 45% at 85% 95%, rgba(212, 168, 75, 0.12), transparent 45%),
+    radial-gradient(ellipse 55% 40% at 15% 88%, rgba(120, 22, 38, 0.18), transparent 42%),
+    radial-gradient(ellipse 900px 380px at 50% 0%, rgba(57, 255, 122, 0.08), transparent 50%),
     linear-gradient(175deg, #070910 0%, var(--bg) 42%, #040508 100%);
+  background-attachment: fixed;
 }
 
-html[data-atmosphere="default"] body::before {
-  opacity: 0.16;
+body[data-atmosphere="default"]::before {
+  opacity: 0.18;
   background-image: repeating-linear-gradient(
     -19deg,
     transparent,
     transparent 5px,
-    rgba(170, 198, 230, 0.055) 5px,
-    rgba(170, 198, 230, 0.055) 6px
+    rgba(170, 198, 230, 0.065) 5px,
+    rgba(170, 198, 230, 0.065) 6px
   );
 }
 
-/* 雨落狂流：更暗、雨更密、偏青灰 */
-html[data-atmosphere="storm"] body {
-  background-color: #030508;
+body[data-atmosphere="storm"] {
+  background-color: #020408;
   background-image:
-    radial-gradient(ellipse 100% 50% at 50% -10%, rgba(60, 85, 115, 0.35), transparent 55%),
-    radial-gradient(ellipse 70% 55% at 10% 100%, rgba(20, 35, 55, 0.5), transparent 50%),
-    linear-gradient(180deg, #04060a 0%, #020305 100%);
+    radial-gradient(ellipse 100% 50% at 50% -10%, rgba(50, 75, 110, 0.5), transparent 55%),
+    radial-gradient(ellipse 70% 55% at 10% 100%, rgba(15, 28, 48, 0.65), transparent 50%),
+    linear-gradient(180deg, #03050a 0%, #010204 100%);
+  background-attachment: fixed;
 }
 
-html[data-atmosphere="storm"] body::before {
-  opacity: 0.26;
+body[data-atmosphere="storm"]::before {
+  opacity: 0.32;
   background-image: repeating-linear-gradient(
     -21deg,
     transparent,
     transparent 4px,
-    rgba(130, 160, 195, 0.07) 4px,
-    rgba(130, 160, 195, 0.07) 5px
+    rgba(130, 160, 195, 0.09) 4px,
+    rgba(130, 160, 195, 0.09) 5px
   );
 }
 
-/* 盛夏大逃亡：高对比暖色、雨丝减弱，像暴晒与逃逸 */
-html[data-atmosphere="midsummer"] body {
-  background-color: #0a0805;
+body[data-atmosphere="midsummer"] {
+  background-color: #0c0804;
   background-image:
-    radial-gradient(ellipse 90% 60% at 20% -5%, rgba(255, 200, 90, 0.18), transparent 50%),
-    radial-gradient(ellipse 70% 50% at 95% 20%, rgba(255, 140, 60, 0.1), transparent 45%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(40, 25, 18, 0.85), transparent 55%),
-    linear-gradient(165deg, #120c08 0%, #060504 55%, #030201 100%);
+    radial-gradient(ellipse 90% 60% at 20% -5%, rgba(255, 200, 90, 0.28), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 95% 20%, rgba(255, 120, 50, 0.16), transparent 45%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(30, 18, 12, 0.9), transparent 55%),
+    linear-gradient(165deg, #140e08 0%, #080604 55%, #030201 100%);
+  background-attachment: fixed;
 }
 
-html[data-atmosphere="midsummer"] body::before {
-  opacity: 0.06;
+body[data-atmosphere="midsummer"]::before {
+  opacity: 0.07;
   background-image: repeating-linear-gradient(
     -18deg,
     transparent,
     transparent 7px,
-    rgba(255, 220, 180, 0.04) 7px,
-    rgba(255, 220, 180, 0.04) 8px
+    rgba(255, 220, 180, 0.05) 7px,
+    rgba(255, 220, 180, 0.05) 8px
   );
 }
 
-/* 红井：中心下沉暗红、边缘铁黑 */
-html[data-atmosphere="redwell"] body {
-  background-color: #050304;
+body[data-atmosphere="redwell"] {
+  background-color: #040102;
   background-image:
-    radial-gradient(ellipse 55% 50% at 50% 55%, rgba(110, 12, 28, 0.45), transparent 62%),
-    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(30, 6, 10, 0.9), transparent 55%),
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(40, 20, 25, 0.35), transparent 50%),
-    linear-gradient(180deg, #080506 0%, #030202 100%);
+    radial-gradient(ellipse 50% 48% at 50% 58%, rgba(130, 18, 36, 0.55), transparent 62%),
+    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(25, 4, 8, 0.95), transparent 55%),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(50, 15, 22, 0.45), transparent 50%),
+    linear-gradient(180deg, #0a0506 0%, #020101 100%);
+  background-attachment: fixed;
 }
 
-html[data-atmosphere="redwell"] body::before {
-  opacity: 0.1;
+body[data-atmosphere="redwell"]::before {
+  opacity: 0.12;
   background-image: repeating-linear-gradient(
     -17deg,
     transparent,
     transparent 6px,
-    rgba(200, 100, 110, 0.04) 6px,
-    rgba(200, 100, 110, 0.04) 7px
+    rgba(220, 100, 110, 0.055) 6px,
+    rgba(220, 100, 110, 0.055) 7px
   );
 }
 
-/* 落地窗：强水平光带、室内冷侧 + 窗外暖街 */
-html[data-atmosphere="window"] body {
-  background-color: #07080c;
+body[data-atmosphere="window"] {
+  background-color: #06070c;
   background-image:
     linear-gradient(
       180deg,
-      rgba(255, 248, 235, 0.07) 0%,
-      rgba(255, 248, 235, 0.02) 8%,
-      transparent 14%
+      rgba(255, 248, 235, 0.1) 0%,
+      rgba(255, 248, 235, 0.03) 10%,
+      transparent 18%
     ),
-    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(255, 190, 120, 0.08), transparent 50%),
-    radial-gradient(ellipse 80% 50% at 0% 50%, rgba(70, 95, 130, 0.12), transparent 45%),
-    linear-gradient(95deg, #06070b 0%, #0a0c12 40%, #080a10 100%);
+    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(255, 190, 120, 0.12), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 0% 50%, rgba(70, 95, 130, 0.16), transparent 45%),
+    linear-gradient(95deg, #05060b 0%, #0b0d14 40%, #080a10 100%);
+  background-attachment: fixed;
 }
 
-html[data-atmosphere="window"] body::before {
-  opacity: 0.12;
+body[data-atmosphere="window"]::before {
+  opacity: 0.14;
   background-image: repeating-linear-gradient(
     -20deg,
     transparent,
     transparent 6px,
-    rgba(180, 200, 230, 0.045) 6px,
-    rgba(180, 200, 230, 0.045) 7px
+    rgba(180, 200, 230, 0.055) 6px,
+    rgba(180, 200, 230, 0.055) 7px
   );
 }

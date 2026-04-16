@@ -1,17 +1,77 @@
-/** 本地存储键：切换后刷新仍保留 */
+/** 本地存储键 */
 export const ATMOSPHERE_STORAGE_KEY = "my_blog_web_atmosphere";
 
-/** 顶部选项：只驱动背景/氛围，与正文无关。id 对应 document.documentElement[data-atmosphere] */
-export const atmospheres = [
-  { id: "default", label: "默认 · 雨夜终端" },
-  { id: "storm", label: "雨落狂流之暗" },
-  { id: "midsummer", label: "迎着盛夏大逃亡" },
-  { id: "redwell", label: "东京 · 红井" },
-  { id: "window", label: "落地窗与反光" },
-] as const;
+export type AtmosphereId =
+  | "default"
+  | "storm"
+  | "midsummer"
+  | "redwell"
+  | "window";
 
-export type AtmosphereId = (typeof atmospheres)[number]["id"];
+/** 横向选项卡顺序（终端里像 `[ MODE ]`） */
+export const ATMOSPHERE_ORDER: AtmosphereId[] = [
+  "default",
+  "storm",
+  "midsummer",
+  "redwell",
+  "window",
+];
+
+export type BannerLine = { text: string; color: string };
+
+export type AtmosphereDef = {
+  tab: string;
+  /** 早期游戏标题感：彩色多行字符串，仅占装饰层 */
+  banner: BannerLine[];
+};
+
+export const ATMOSPHERE_DEF: Record<AtmosphereId, AtmosphereDef> = {
+  default: {
+    tab: "RAIN",
+    banner: [
+      { text: "╔══════════════════════════════════════╗", color: "#3ee89a" },
+      { text: "║   NIGHT LINK · TOKYO / TERMINAL      ║", color: "#8fd4ff" },
+      { text: "╚══════════════════════════════════════╝", color: "#3ee89a" },
+    ],
+  },
+  storm: {
+    tab: "STORM",
+    banner: [
+      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#4a6a8a" },
+      { text: "  HEAVY RAIN · LOW VISIBILITY · COLD  ", color: "#a8c8e8" },
+      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#3a5a78" },
+    ],
+  },
+  midsummer: {
+    tab: "RUN",
+    banner: [
+      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#ffb347" },
+      { text: "  MIDSUMMER ESCAPE · HEAT HAZE · ROAD  ", color: "#ffe566" },
+      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#ff8844" },
+    ],
+  },
+  redwell: {
+    tab: "WELL",
+    banner: [
+      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#5a1018" },
+      { text: "  DEEP RED · SUBWAY STEAM · WARNING   ", color: "#ff6b6b" },
+      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#3a080c" },
+    ],
+  },
+  window: {
+    tab: "GLASS",
+    banner: [
+      { text: "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁", color: "#fff3dc" },
+      { text: "  FLOOR-TO-CEILING · CITY GLOW BELOW  ", color: "#c8ddff" },
+      { text: "▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔", color: "#ffe8c8" },
+    ],
+  },
+};
 
 export function isAtmosphereId(s: string): s is AtmosphereId {
-  return atmospheres.some((a) => a.id === s);
+  return (ATMOSPHERE_ORDER as readonly string[]).includes(s);
+}
+
+export function getAtmosphereDef(id: AtmosphereId): AtmosphereDef {
+  return ATMOSPHERE_DEF[id];
 }

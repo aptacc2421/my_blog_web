@@ -8,7 +8,7 @@ import { ATMOSPHERE_STORAGE_KEY, isAtmosphereId } from "./themes";
 try {
   const v = localStorage.getItem(ATMOSPHERE_STORAGE_KEY);
   if (v && isAtmosphereId(v)) {
-    document.documentElement.dataset.atmosphere = v;
+    document.body.dataset.atmosphere = v;
   }
 } catch {
   /* private mode etc. */
