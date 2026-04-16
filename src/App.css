@@ -1,7 +1,42 @@
 .shell {
+  position: relative;
   max-width: 920px;
   margin: 0 auto;
   padding: 0 1.1rem 4rem;
+}
+
+.shell-front {
+  position: relative;
+  z-index: 1;
+}
+
+/* 全屏字符画背景（MUD / BBS 风），在 shell 内固定，不挡点击 */
+.ascii-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.34;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.ascii-backdrop__pre {
+  margin: 0;
+  padding: 0.5rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: clamp(6px, 0.95vw, 10px);
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: pre;
+  text-align: left;
+  max-width: min(100vw, 92rem);
+}
+
+.ascii-backdrop__row {
+  display: block;
 }
 
 /* 外框：老游戏/终端窗口 */

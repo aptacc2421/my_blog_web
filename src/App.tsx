@@ -9,6 +9,7 @@ import {
   isMenuViewId,
   type MenuViewId,
 } from "./menu";
+import { AsciiBackdrop } from "./AsciiBackdrop";
 import { BlogPanel } from "./blog/BlogPanel";
 import { getAtmosphereDef, type AtmosphereId } from "./themes";
 
@@ -65,6 +66,8 @@ function App() {
 
   return (
     <div className="shell">
+      <AsciiBackdrop atmosphere={atm} />
+      <div className="shell-front">
       <nav className="nav" aria-label="站点与终端提示">
         <div className="nav__prompt">
           <span className="user">{site.name}</span>
@@ -309,6 +312,7 @@ function App() {
             </span>
           </footer>
         </div>
+      </div>
       </div>
     </div>
   );
