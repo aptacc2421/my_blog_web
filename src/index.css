@@ -1,17 +1,19 @@
 :root {
-  --bg: #050806;
-  --bg-panel: #0a100c;
-  --surface: #0c1410;
-  --border: rgba(57, 255, 122, 0.22);
-  --border-dim: rgba(57, 255, 122, 0.1);
-  --text: #d8f5df;
-  --text-muted: #5f8a6a;
-  --phosphor: #39ff7a;
-  --phosphor-dim: rgba(57, 255, 122, 0.65);
-  --blood: #9b1c3a;
-  --blood-glow: rgba(200, 40, 80, 0.35);
-  --gold: #c9a227;
-  --gold-dim: rgba(201, 162, 39, 0.25);
+  --bg: #06080d;
+  --bg-panel: #0a0e14;
+  --surface: #0c1218;
+  --border: rgba(57, 255, 122, 0.18);
+  --border-dim: rgba(57, 255, 122, 0.09);
+  --text: #dce8e4;
+  --text-muted: #6a7d78;
+  --phosphor: #3ee89a;
+  --phosphor-dim: rgba(62, 232, 154, 0.6);
+  --blood: #7a1528;
+  --blood-glow: rgba(160, 30, 55, 0.22);
+  --gold: #d4a84b;
+  --gold-dim: rgba(212, 168, 75, 0.2);
+  --window-glow: rgba(255, 236, 210, 0.12);
+  --tokyo-blue: rgba(90, 120, 160, 0.14);
   --font-mono: ui-monospace, "Cascadia Mono", "Cascadia Code", "SFMono-Regular",
     Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-ui: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
@@ -36,33 +38,23 @@ body {
   font-family: var(--font-ui);
   font-size: 15px;
   background-color: var(--bg);
-  background-image:
-    radial-gradient(ellipse 900px 420px at 50% -20%, rgba(57, 255, 122, 0.07), transparent 55%),
-    radial-gradient(ellipse 700px 500px at 100% 40%, rgba(155, 28, 58, 0.12), transparent 50%),
-    linear-gradient(165deg, rgba(5, 8, 6, 0.96) 0%, var(--bg) 38%, #040604 100%);
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 轻雨丝：斜向细线 */
+/* 雨丝层：占位由各 data-atmosphere 在 themes.css 着色 */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  opacity: 0.12;
-  background-image: repeating-linear-gradient(
-    -18deg,
-    transparent,
-    transparent 6px,
-    rgba(200, 220, 255, 0.06) 6px,
-    rgba(200, 220, 255, 0.06) 7px
-  );
+  opacity: 0;
+  background-image: none;
 }
 
-/* CRT 扫描线 */
+/* CRT 扫描线：全局保留一点「终端」感 */
 body::after {
   content: "";
   position: fixed;

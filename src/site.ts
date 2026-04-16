@@ -1,54 +1,59 @@
-/** 在这里修改你的个人信息与“终端/龙族”氛围文案 */
+/**
+ * 内容策略（对齐需求）：
+ * - 正文 / 简介 / 项目描述：正常、克制，可直接用于简历或对外介绍。
+ * - 「龙族感」：由顶部「氛围」切换背景（见 themes.css / themes.ts），不占正文。
+ * - 终端感：system / bootLog / 命令式按钮与区块标题，仅作交互壳。
+ */
 export const site = {
   name: "你的名字",
-  /** 像 RPG 副标题一行 */
-  tagline: "雨线在窗外排队，我在终端里和命运对局。",
-  /** 职业一行，可自嘲可冷感 */
-  role: "写代码的混血种 — 全栈工程师",
-  location: "Nibelungen // 未标注坐标",
+  tagline:
+    "做 Web 前端与全栈开发，关注可维护性、性能与可访问性，用清晰文档把复杂系统讲明白。",
+  role: "全栈工程师",
+  location: "GMT+8",
   about:
-    "世界很大，龙很安静。有人把人生当成一场过场动画，我偏想把它编译成可读的日志：错了就改，崩了就重启。咖啡凉了也没关系，反正雨还会下很久。",
+    "我有多年 Web 项目经验，熟悉 TypeScript、React 与 Node.js 生态，能把设计稿与接口协议落成可上线的页面与服务。平时重视代码评审、单测与 CI，也愿意参与需求澄清与排期。",
   email: "hello@example.com",
   system: {
-    name: "DRAGON-CLI",
-    host: "cassell.local",
-    version: "0.13",
+    name: "SITE-TERM",
+    host: "localhost",
+    version: "1.0.0",
   },
-  /** 仿开机滚屏，可自行增删 */
+  /** 终端开机动画：偏技术向，避免小说腔 */
   bootLog: [
-    "INIT core ……………………… OK",
-    "MOUNT /world/rain …………… rw",
-    "LOAD bloodline.dll ………… deferred",
-    "LISTEN melancholy.stream … on",
+    "kernel: workspace online …………… OK",
+    "fs: mount ~/repo (rw) ………………… OK",
+    "net: uplink idle ……………………… OK",
+    "ui: compositor ready ………………… OK",
   ],
+  /** 区块小标签：中性文案；意象改在顶部「氛围」里切换 */
   sections: {
-    hero: "SEQUENCE // COLD_OPEN",
-    about: "CH.01 — 档案",
-    skills: "SKILL_TREE (read-only)",
-    projects: "CH.02 — 任务清单",
-    contact: "CH.03 — 联络协议",
+    hero: "首页",
+    about: "关于",
+    skills: "技能",
+    projects: "项目",
+    contact: "联系",
   },
   links: [
-    { label: "GitHub", href: "https://github.com", cmd: "curl -L gh" },
-    { label: "博客", href: "#", cmd: "cat ./blog" },
-    { label: "LinkedIn", href: "https://linkedin.com", cmd: "open in" },
+    { label: "GitHub", href: "https://github.com", cmd: "git remote -v" },
+    { label: "博客", href: "#", cmd: "less ./blog/README.md" },
+    { label: "LinkedIn", href: "https://linkedin.com", cmd: "open profile" },
   ],
   projects: [
     {
-      title: "QUEST_α // 仪表盘",
-      desc: "React + TS。像构筑言灵一样把状态锁进格子，界面亮起来的时候，世界安静半秒。",
+      title: "数据仪表盘",
+      desc: "基于 React 与 TypeScript 的管理端，封装表格、筛选与图表组件，统一权限与埋点方案。",
       href: "#",
       tags: ["React", "TS", "Vite"],
     },
     {
-      title: "QUEST_β // 自动化",
-      desc: "CLI：把重复的命运写成脚本。文档是写给未来的遗书，也是路标。",
+      title: "CLI 自动化工具",
+      desc: "Node 命令行工具，将重复部署与配置检查脚本化，附带使用说明与错误码文档。",
       href: "#",
       tags: ["Node", "CLI"],
     },
     {
-      title: "QUEST_γ // 知识库",
-      desc: "Markdown + 搜索。记忆太沉，就分卷存放；需要时再召唤。",
+      title: "知识库模板",
+      desc: "Markdown 编写、本地搜索与侧边目录，适合个人笔记或小团队文档站。",
       href: "#",
       tags: ["Markdown", "Search"],
     },
@@ -59,13 +64,15 @@ export const site = {
     "Node.js",
     "系统设计",
     "技术写作",
-    "雨夜生存",
+    "代码评审",
   ],
-  /** 右侧 STATUS 面板四格 */
   status: [
-    { label: "FOCUS", value: "工程 / 产品" },
-    { label: "STYLE", value: "可读 > 聪明" },
+    { label: "FOCUS", value: "Web / 工程化" },
+    { label: "STYLE", value: "可读、可测" },
     { label: "OUTPUT", value: "代码 / 文档" },
-    { label: "STATE", value: "LISTENING" },
+    { label: "STATE", value: "OPEN_TO_WORK" },
   ],
+  contactTitle: "联系",
+  contactLead:
+    "欢迎通过邮件讨论合作、兼职或技术交流；也可在 GitHub 上直接提 issue。",
 } as const;
