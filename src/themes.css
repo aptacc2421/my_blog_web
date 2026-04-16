@@ -86,25 +86,44 @@ body[data-atmosphere="redwell"]::before {
   );
 }
 
+/* 落地窗：室内暗部 + 脚下城市光带 + 极淡竖向窗棂（全屏背景，无字） */
 body[data-atmosphere="window"] {
-  background-color: #05060a;
-  background-image: linear-gradient(
-    180deg,
-    rgba(40, 50, 70, 0.2) 0%,
-    transparent 35%
-  );
+  background-color: #03050c;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(6, 10, 20, 0.92) 0%,
+      rgba(10, 16, 32, 0.55) 32%,
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse 130% 55% at 50% 100%,
+      rgba(255, 220, 170, 0.22) 0%,
+      rgba(90, 110, 160, 0.12) 38%,
+      transparent 62%
+    ),
+    linear-gradient(180deg, #040814 0%, #0a1224 55%, #050810 100%);
   background-attachment: fixed;
 }
 
 body[data-atmosphere="window"]::before {
-  opacity: 0.1;
-  background-image: repeating-linear-gradient(
-    -20deg,
-    transparent,
-    transparent 6px,
-    rgba(180, 200, 230, 0.04) 6px,
-    rgba(180, 200, 230, 0.04) 7px
-  );
+  opacity: 0.14;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(11vw - 1px),
+      rgba(255, 255, 255, 0.035) calc(11vw - 1px),
+      rgba(255, 255, 255, 0.035) calc(11vw + 2px),
+      transparent calc(11vw + 2px)
+    ),
+    repeating-linear-gradient(
+      -18deg,
+      transparent,
+      transparent 7px,
+      rgba(180, 200, 230, 0.04) 7px,
+      rgba(180, 200, 230, 0.04) 8px
+    );
 }
 
 /* ------------------------------------------------------------------ */

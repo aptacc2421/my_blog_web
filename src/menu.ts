@@ -42,7 +42,10 @@ export function atmosphereForMenu(view: MenuViewId): AtmosphereId {
   return MENU_DEF[view].atmosphere;
 }
 
-/** 与 App 首帧一致：hash 优先，其次 localStorage，默认 home */
+/**
+ * 与 App 首帧一致：hash 优先，其次 localStorage，默认 home。
+ * `main.tsx` 用它同步 `body.dataset`，避免首屏主题色与正文不同步。
+ */
 export function readInitialMenuView(): MenuViewId {
   if (typeof window === "undefined") return "home";
   const h = window.location.hash.replace(/^#/, "");

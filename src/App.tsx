@@ -11,8 +11,6 @@ import {
 } from "./menu";
 import { AsciiBackdrop } from "./AsciiBackdrop";
 import { BlogPanel } from "./blog/BlogPanel";
-import { getAtmosphereDef, type AtmosphereId } from "./themes";
-
 const TITLE_MENU_ORDER = MENU_ORDER.filter((id) => id !== "home");
 
 const TITLE_BOOT_HOME = `* SELF-CHECK ......................... OK
@@ -20,22 +18,6 @@ const TITLE_BOOT_HOME = `* SELF-CHECK ......................... OK
 * CHAPTER SELECT ..................... [1][2][3][4]
 
 * ↑↓ 移动光标 · Enter 或 Z 确认 · 数字键直达`;
-
-function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
-  const { banner } = getAtmosphereDef(atmosphere);
-  return (
-    <pre className="term-banner" aria-hidden="true">
-      {banner.map((line, i) => (
-        <span
-          key={i}
-          className={`term-banner__line term-banner__line--${line.tone}`}
-        >
-          {line.text}
-        </span>
-      ))}
-    </pre>
-  );
-}
 
 function TitleBootHome() {
   return (
@@ -54,21 +36,8 @@ function TitleScreen({
   setCursorIndex: (i: number) => void;
   onPick: (id: MenuViewId) => void;
 }) {
-  const { system } = site;
-  const boxW = 45;
-  const row = (text: string) => {
-    const t =
-      text.length > boxW ? text.slice(0, boxW) : text.padEnd(boxW, " ");
-    return `║${t}║`;
-  };
-  const mid = `  ${system.name}  //  ${system.host}  //  v${system.version}  `;
   return (
     <section className="title-screen title-screen--atlas" aria-labelledby="title-main">
-      <pre className="title-screen__marquee" aria-hidden="true">
-        {`╔${"═".repeat(18)}  TITLE  ${"═".repeat(18)}╗
-${row(mid)}
-╚${"═".repeat(boxW)}╝`}
-      </pre>
       <h1 id="title-main" className="title-screen__name">
         {site.name}
       </h1>
@@ -186,7 +155,7 @@ function App() {
           <span className="nav__cloud-tilde">:~$ </span>
           <span className="nav__cloud-hint">
             {menuView === "home"
-              ? "title_screen — 选章节进入；意象在背景与装饰条"
+              ? "title_screen — 选章节进入；意象在全屏背景"
               : "子页面 · 页脚可回标题画面"}
           </span>
         </div>
@@ -224,22 +193,10 @@ function App() {
       ) : null}
 
       <div className="frame" role="presentation">
-        <div className="frame__bar">
-          <span className="frame__bar-left">
-            <strong>{system.name}</strong> // v{system.version} //{" "}
-            <span className="frame__ok">ok</span>
-          </span>
-          <span className="frame__dots" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-        </div>
         <div className="frame__body">
-          {menuView === "home" ? null : <TermBanner atmosphere={atm} />}
-          {menuView === "home" ? null : (
+          {menuView !== "home" && atm === "window" ? (
             <div className="window-horizon" aria-hidden="true" />
-          )}
+          ) : null}
 
           <main id="top" key={menuView} className="menu-main menu-main--ut-fade">
             {menuView === "home" && (
