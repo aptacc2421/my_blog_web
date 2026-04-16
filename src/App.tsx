@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import "./App.css";
 import { site } from "./site";
 import {
@@ -12,6 +12,18 @@ import {
 import { AsciiBackdrop } from "./AsciiBackdrop";
 import { BlogPanel } from "./blog/BlogPanel";
 import { getAtmosphereDef, type AtmosphereId } from "./themes";
+
+const TITLE_MENU_ORDER = MENU_ORDER.filter((id) => id !== "home");
+
+const CLOUD_SHELL_HOME = `Welcome to Cloud Shell! (offline mock — no network calls)
+Type "help", "docs", or "exit". Machine image: debian/terminal/pixel-1
+Provisioning your container... done.
+Updating gcloud components... suppressed (--quiet).
+
+user@cloudshell:~ (site-local)$ gcloud config set project ${site.system.name.toLowerCase()} --quiet
+Updated property [core/project].
+
+user@cloudshell:~ (site-local)$ _`;
 
 function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
   const { banner } = getAtmosphereDef(atmosphere);
@@ -27,6 +39,59 @@ function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
         </span>
       ))}
     </pre>
+  );
+}
+
+function CloudShellHome() {
+  return (
+    <pre className="cloud-shell cloud-shell--home" aria-hidden="true">
+      {CLOUD_SHELL_HOME}
+    </pre>
+  );
+}
+
+function TitleScreen({ onPick }: { onPick: (id: MenuViewId) => void }) {
+  const { system } = site;
+  const boxW = 45;
+  const row = (text: string) => {
+    const t =
+      text.length > boxW ? text.slice(0, boxW) : text.padEnd(boxW, " ");
+    return `║${t}║`;
+  };
+  const mid = `  ${system.name}  //  ${system.host}  //  v${system.version}  `;
+  return (
+    <section className="title-screen" aria-labelledby="title-main">
+      <pre className="title-screen__marquee" aria-hidden="true">
+        {`╔${"═".repeat(18)}  TITLE  ${"═".repeat(18)}╗
+${row(mid)}
+╚${"═".repeat(boxW)}╝`}
+      </pre>
+      <h1 id="title-main" className="title-screen__name">
+        {site.name}
+      </h1>
+      <p className="title-screen__role">{site.role}</p>
+      <p className="title-screen__tag">{site.tagline}</p>
+      <p className="title-screen__prompt" aria-hidden="true">
+        ▶ SELECT STAGE — press 1–4 or click
+      </p>
+      <nav className="title-menu" aria-label="开始菜单">
+        {TITLE_MENU_ORDER.map((id, i) => (
+          <button
+            key={id}
+            type="button"
+            className="title-menu__btn"
+            onClick={() => onPick(id)}
+          >
+            <span className="title-menu__idx">{i + 1}</span>
+            <span className="title-menu__lbl">{MENU_DEF[id].tab}</span>
+            <span className="title-menu__chev" aria-hidden="true">
+              &gt;&gt;
+            </span>
+          </button>
+        ))}
+      </nav>
+      <CloudShellHome />
+    </section>
   );
 }
 
@@ -48,7 +113,7 @@ function App() {
   const { system, bootLog, sections, status } = site;
   const [menuView, setMenuView] = useState<MenuViewId>(readMenuView);
 
-  const goMenu = (id: MenuViewId) => {
+  const goMenu = useCallback((id: MenuViewId) => {
     setMenuView(id);
     try {
       localStorage.setItem(MENU_STORAGE_KEY, id);
@@ -56,11 +121,34 @@ function App() {
     } catch {
       /* ignore */
     }
-  };
+  }, []);
 
   useLayoutEffect(() => {
     document.body.dataset.atmosphere = atmosphereForMenu(menuView);
+    document.body.dataset.menuView = menuView;
   }, [menuView]);
+
+  useEffect(() => {
+    if (menuView !== "home") return;
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target;
+      if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
+        return;
+      }
+      const n = Number.parseInt(e.key, 10);
+      if (
+        Number.isNaN(n) ||
+        n < 1 ||
+        n > TITLE_MENU_ORDER.length
+      ) {
+        return;
+      }
+      e.preventDefault();
+      goMenu(TITLE_MENU_ORDER[n - 1]!);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuView, goMenu]);
 
   const atm = atmosphereForMenu(menuView);
 
@@ -68,37 +156,51 @@ function App() {
     <div className="shell">
       <AsciiBackdrop atmosphere={atm} />
       <div className="shell-front">
-      <nav className="nav" aria-label="站点与终端提示">
-        <div className="nav__prompt">
-          <span className="user">{site.name}</span>
+      <nav className="nav nav--cloud" aria-label="Cloud Shell 风格提示">
+        <div className="nav__cloud-line">
+          <span className="nav__cloud-badge">[cloudshell:{menuView}]</span>
+          <span className="nav__cloud-user">{site.name}</span>
           <span>@</span>
-          <span className="path">{system.host}</span>
-          <span>:~$ </span>
-          <span className="nav__hint">main_menu</span>
+          <span className="nav__cloud-host">{system.host}</span>
+          <span className="nav__cloud-tilde">:~$</span>
+          <span className="nav__cloud-hint">
+            {menuView === "home"
+              ? " gcloud interactive — pick a stage below"
+              : ` stage=${MENU_DEF[menuView].tab} · footer has « MAIN MENU`}
+          </span>
         </div>
       </nav>
 
-      <div className="atm-toolbar" role="tablist" aria-label="主菜单">
-        <span className="atm-toolbar__prompt" aria-hidden="true">
-          $ menu --select
-        </span>
-        <div className="atm-toolbar__tabs">
-          {MENU_ORDER.map((id) => (
-            <button
-              type="button"
-              key={id}
-              role="tab"
-              aria-selected={menuView === id}
-              className={
-                menuView === id ? "atm-tab atm-tab--active" : "atm-tab"
-              }
-              onClick={() => goMenu(id)}
-            >
-              [{MENU_DEF[id].tab}]
-            </button>
-          ))}
+      {menuView !== "home" ? (
+        <div className="atm-toolbar" role="tablist" aria-label="关卡切换">
+          <button
+            type="button"
+            className="atm-tab atm-tab--home"
+            onClick={() => goMenu("home")}
+          >
+            « MAIN MENU
+          </button>
+          <span className="atm-toolbar__prompt" aria-hidden="true">
+            $ gcloud alpha menu select
+          </span>
+          <div className="atm-toolbar__tabs">
+            {MENU_ORDER.map((id) => (
+              <button
+                type="button"
+                key={id}
+                role="tab"
+                aria-selected={menuView === id}
+                className={
+                  menuView === id ? "atm-tab atm-tab--active" : "atm-tab"
+                }
+                onClick={() => goMenu(id)}
+              >
+                [{MENU_DEF[id].tab}]
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="frame" role="presentation">
         <div className="frame__bar">
@@ -113,50 +215,58 @@ function App() {
           </span>
         </div>
         <div className="frame__body">
-          <TermBanner atmosphere={atm} />
-          <div className="window-horizon" aria-hidden="true" />
+          {menuView === "home" ? null : <TermBanner atmosphere={atm} />}
+          {menuView === "home" ? null : (
+            <div className="window-horizon" aria-hidden="true" />
+          )}
 
           <main id="top" className="menu-main">
-            {menuView === "home" && (
-              <section
-                className="menu-panel"
-                aria-labelledby="hero-title"
-              >
-                <div className="hero hero--solo">
-                  <div>
-                    <p className="hero__seq">{sections.hero}</p>
-                    <pre className="boot" aria-label="启动日志">
-                      {bootLog.map((line) => (
-                        <span key={line}>{line}</span>
-                      ))}
-                    </pre>
-                    <p className="hero__cmd">
-                      <span className="hero__prompt">~ $</span>{" "}
-                      <kbd>whoami</kbd>
-                    </p>
-                    <h1 id="hero-title" className="hero__title">
-                      你好，我是 <em>{site.name}</em>
-                    </h1>
-                    <p className="hero__role">{site.role}</p>
-                    <p className="hero__lead">{site.tagline}</p>
-                    <div className="hero__actions">
-                      <a
-                        className="btn btn--primary"
-                        href={`mailto:${site.email}`}
-                      >
-                        mail -s contact
-                      </a>
-                      <button
-                        type="button"
-                        className="btn"
-                        onClick={() => goMenu("projects")}
-                      >
-                        open ./projects
-                      </button>
-                    </div>
-                  </div>
+            {menuView === "home" && <TitleScreen onPick={goMenu} />}
 
-                  <aside className="panel" aria-label="状态面板">
+            {menuView === "about" && (
+              <section
+                id="about"
+                className="menu-panel section section--solo"
+                aria-labelledby="about-title"
+              >
+                <div className="section__head">
+                  <p className="section__tag">{sections.about}</p>
+                  <h2 id="about-title" className="section__title">
+                    $ cat ./about.md
+                  </h2>
+                </div>
+                <div className="about-hero card-pixel">
+                  <p className="about-hero__seq">{sections.hero}</p>
+                  <pre className="boot boot--compact" aria-label="启动日志">
+                    {bootLog.map((line) => (
+                      <span key={line}>{line}</span>
+                    ))}
+                  </pre>
+                  <p className="about-hero__cmd">
+                    <span className="about-hero__prompt">~ $</span>{" "}
+                    <kbd>whoami</kbd>
+                  </p>
+                  <h3 className="about-hero__title">
+                    你好，我是 <em>{site.name}</em>
+                  </h3>
+                  <p className="about-hero__role">{site.role}</p>
+                  <p className="about-hero__lead">{site.tagline}</p>
+                  <div className="about-hero__actions">
+                    <a
+                      className="btn btn--primary"
+                      href={`mailto:${site.email}`}
+                    >
+                      mail -s contact
+                    </a>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => goMenu("projects")}
+                    >
+                      open ./projects
+                    </button>
+                  </div>
+                  <aside className="panel panel--about" aria-label="状态面板">
                     <div className="panel__head">
                       <span>
                         STATUS // <strong>OK</strong>
@@ -172,21 +282,6 @@ function App() {
                       ))}
                     </div>
                   </aside>
-                </div>
-              </section>
-            )}
-
-            {menuView === "about" && (
-              <section
-                id="about"
-                className="menu-panel section section--solo"
-                aria-labelledby="about-title"
-              >
-                <div className="section__head">
-                  <p className="section__tag">{sections.about}</p>
-                  <h2 id="about-title" className="section__title">
-                    $ cat ./about.md
-                  </h2>
                 </div>
                 <div className="grid-2">
                   <div className="prose">
@@ -307,7 +402,7 @@ function App() {
                 className="footer__btn"
                 onClick={() => goMenu("home")}
               >
-                返回主页菜单
+                « MAIN MENU / 标题画面
               </button>
             </span>
           </footer>

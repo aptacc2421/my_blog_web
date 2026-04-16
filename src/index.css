@@ -103,3 +103,35 @@ img {
   background: rgba(57, 255, 122, 0.28);
   color: var(--text);
 }
+
+/* 各栏目字体壳：仅系统栈，无外联字体 */
+body[data-menu-view="home"] {
+  --font-ui: ui-monospace, "Cascadia Mono", "Cascadia Code", "SFMono-Regular",
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono: ui-monospace, "Cascadia Mono", "Cascadia Code", "SFMono-Regular",
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-menu-view="about"] {
+  --font-ui: Georgia, "Palatino Linotype", "Noto Serif CJK SC", "Songti SC",
+    "Source Han Serif CN", "Times New Roman", serif;
+  --font-mono: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+body[data-menu-view="projects"] {
+  --font-ui: ui-monospace, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono: ui-monospace, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+body[data-menu-view="blog"] {
+  --font-ui: system-ui, -apple-system, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, Menlo, Monaco, Consolas, monospace;
+}
+
+body[data-menu-view="contact"] {
+  --font-ui: "Segoe UI", system-ui, -apple-system, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, Menlo, Monaco, Consolas, monospace;
+}

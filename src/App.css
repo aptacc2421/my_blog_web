@@ -120,6 +120,16 @@
   box-shadow: 0 0 12px rgba(57, 255, 122, 0.12);
 }
 
+.atm-tab--home {
+  border-style: dashed;
+  color: var(--gold);
+}
+
+.atm-tab--home:hover {
+  color: var(--phosphor);
+  border-color: var(--phosphor);
+}
+
 /* 早期游戏式彩色标题串 */
 .term-banner {
   margin: 0.5rem 0 0.35rem;
@@ -205,6 +215,41 @@
   font-size: 0.82rem;
 }
 
+.nav--cloud {
+  padding-bottom: 0.15rem;
+}
+
+.nav__cloud-line {
+  color: var(--text-muted);
+  line-height: 1.55;
+  font-size: 0.74rem;
+  word-break: break-word;
+}
+
+.nav__cloud-badge {
+  color: var(--phosphor-dim);
+  margin-right: 0.35rem;
+}
+
+.nav__cloud-user {
+  color: var(--phosphor);
+  font-weight: 600;
+}
+
+.nav__cloud-host {
+  color: var(--gold);
+}
+
+.nav__cloud-tilde {
+  margin: 0 0.15rem;
+  color: var(--text-muted);
+}
+
+.nav__cloud-hint {
+  color: var(--text-muted);
+  opacity: 0.82;
+}
+
 .nav__prompt {
   color: var(--text-muted);
   line-height: 1.45;
@@ -244,6 +289,236 @@
 
 .menu-main {
   min-height: min(68vh, 640px);
+}
+
+body[data-menu-view="home"] .menu-main {
+  min-height: min(72vh, 680px);
+}
+
+/* 标题画面：老式主机菜单 + Cloud Shell 块 */
+.title-screen {
+  padding: 0.5rem 0 1.25rem;
+  text-align: center;
+}
+
+.title-screen__marquee {
+  margin: 0 auto 0.85rem;
+  padding: 0.45rem 0.5rem;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: clamp(0.55rem, 1.25vw, 0.68rem);
+  line-height: 1.35;
+  color: var(--phosphor-dim);
+  border: 2px solid var(--border);
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(57, 255, 122, 0.08);
+  text-align: left;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.title-screen__name {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ui);
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--text);
+  text-shadow: 0 0 18px rgba(57, 255, 122, 0.18);
+}
+
+.title-screen__role {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title-screen__tag {
+  margin: 0 auto 0.65rem;
+  max-width: 46ch;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.title-screen__prompt {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--phosphor-dim);
+  letter-spacing: 0.08em;
+}
+
+.title-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-width: 22rem;
+  margin: 0 auto 1rem;
+  text-align: left;
+}
+
+.title-menu__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: linear-gradient(180deg, rgba(18, 26, 22, 0.95), rgba(6, 10, 8, 0.92));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 2px 0 rgba(0, 0, 0, 0.45);
+  transition: border-color 0.1s ease, color 0.1s ease, transform 0.08s ease;
+}
+
+.title-menu__btn:hover {
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+}
+
+.title-menu__btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.title-menu__idx {
+  flex: 0 0 1.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--blood);
+  text-align: center;
+  border: 1px solid var(--border-dim);
+  padding: 0.12rem 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.title-menu__lbl {
+  flex: 1 1 auto;
+}
+
+.title-menu__chev {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--phosphor-dim);
+}
+
+.cloud-shell {
+  margin: 0 auto;
+  max-width: 42rem;
+  padding: 0.55rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-dim);
+  background: rgba(0, 0, 0, 0.5);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cloud-shell--home {
+  margin-top: 0.25rem;
+}
+
+/* 关于页顶：原首页 hero 迁入 */
+.card-pixel {
+  border: 2px solid var(--border);
+  background: rgba(0, 0, 0, 0.38);
+  padding: 0.85rem 0.75rem 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-hero {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 860px) {
+  .about-hero {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: start;
+  }
+}
+
+.about-hero__seq {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin: 0 0 0.45rem;
+  opacity: 0.92;
+}
+
+.boot--compact {
+  margin-bottom: 0.65rem;
+}
+
+.about-hero__cmd {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 0.35rem;
+}
+
+.about-hero__prompt {
+  color: var(--text-muted);
+}
+
+.about-hero__title {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-ui);
+  font-size: clamp(1.2rem, 3.2vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.about-hero__title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.about-hero__role {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.about-hero__lead {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 48ch;
+}
+
+.about-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.panel--about {
+  margin: 0;
 }
 
 .menu-panel.section--solo {

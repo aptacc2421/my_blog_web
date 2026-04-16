@@ -1,5 +1,2 @@
-Replace any default.svg / storm.svg / midsummer.svg / redwell.svg / window.svg
-with your own JPG or WebP (rename to same .svg extension is not required).
-
-If you use new filenames, edit src/themes.css: search for url("/bg/
-and point each body[data-atmosphere="…"] to your file.
+主背景已改为全屏 ASCII 字符画（见 src/asciiScenes.ts），不再依赖本目录图片。
+若要恢复位图底：在 src/themes.css 的 body[data-atmosphere=…] 里自行加 url("/bg/你的文件.jpg") 即可。

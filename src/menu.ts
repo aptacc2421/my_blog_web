@@ -1,9 +1,11 @@
 /**
- * 主菜单 = 下方整块内容。
+ * 视图 id：`home` = 标题画面（开始菜单）；其余栏目在子页面切换。
+ * `document.body.dataset.menuView` 与 `index.css` 里各 `[data-menu-view]` 字体栈对应。
  *
  * 扩展新栏目（例如「相册」「友链」）：
- * 1. 在本文件把 id 加进 MenuViewId、MENU_ORDER、MENU_DEF（并选一个 atmosphere 控制背景图）。
- * 2. 在 App.tsx 的 <main className="menu-main"> 里增加一段 {menuView === "你的id" && ( ... )}。
+ * 1. 在本文件把 id 加进 MenuViewId、MENU_ORDER、MENU_DEF（并选一个 atmosphere 控制 ASCII 背景）。
+ * 2. App.tsx：`TITLE_MENU_ORDER` 自动排除 home；若新栏目要出现在开始菜单，确保在 MENU_ORDER 里且在 home 之后。
+ * 3. 在 <main className="menu-main"> 里增加 {menuView === "你的id" && ( ... )}。
  *
  * 博客文章：往 src/content/blog/*.md 丢文件即可（需 frontmatter 的 title / date），无需改 menu。
  */
