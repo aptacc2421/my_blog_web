@@ -18,49 +18,49 @@ export type BannerLine = { text: string; color: string };
 
 export type AtmosphereDef = {
   tab: string;
-  /** 早期游戏标题感：彩色多行字符串，仅占装饰层 */
+  /** 装饰条：意象在背景与 Ascii，此处仅占一行氛围，正文仍保持克制 */
   banner: BannerLine[];
 };
 
 export const ATMOSPHERE_DEF: Record<AtmosphereId, AtmosphereDef> = {
   default: {
-    tab: "LAWN",
+    tab: "RAIN",
     banner: [
-      { text: "╔══════════════════════════════════════╗", color: "#558b2f" },
-      { text: "║   BACKYARD · SUNNY · SEEDS READY     ║", color: "#fff8e1" },
-      { text: "╚══════════════════════════════════════╝", color: "#33691e" },
+      { text: "╔══════════════════════════════════════╗", color: "#4db892" },
+      { text: "║   NIGHT LINK · TOKYO / GLASS REFL.   ║", color: "#9fd4ff" },
+      { text: "╚══════════════════════════════════════╝", color: "#3a9f7a" },
     ],
   },
   storm: {
-    tab: "RAIN",
+    tab: "STORM",
     banner: [
-      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#5c6b7a" },
-      { text: "  DRIZZLE DAY · PUDDLES · WARM COAT   ", color: "#eceff1" },
-      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#455a64" },
+      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#4a6a8a" },
+      { text: "  HEAVY RAIN · LOW VIS · WET STREET   ", color: "#b8d4f0" },
+      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#3a5a78" },
     ],
   },
   midsummer: {
-    tab: "HEAT",
+    tab: "RUN",
     banner: [
-      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#ff9800" },
-      { text: "  LONG AFTERNOON · ICE TEA · SHADE    ", color: "#fff3e0" },
-      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#f57c00" },
+      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#e89a4a" },
+      { text: "  MIDSUMMER ROAD · HEAT HAZE · ESCAPE  ", color: "#ffe9a8" },
+      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#c86a30" },
     ],
   },
   redwell: {
-    tab: "NIGHT",
+    tab: "WELL",
     banner: [
-      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#5d4037" },
-      { text: "  PORCH LIGHT · CRICKETS · QUIET ROAD ", color: "#ffccbc" },
-      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#3e2723" },
+      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#5a1820" },
+      { text: "  DEEP RED · SUBWAY STEAM · WARNING    ", color: "#ff8a8a" },
+      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#3a080c" },
     ],
   },
   window: {
-    tab: "ROOM",
+    tab: "GLASS",
     banner: [
-      { text: "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁", color: "#cfd8dc" },
-      { text: "  WINDOW SEAT · STREET LAMPS BELOW    ", color: "#e3f2fd" },
-      { text: "▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔", color: "#b0bec5" },
+      { text: "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁", color: "#fff3dc" },
+      { text: "  FLOOR-TO-CEILING · CITY GLOW BELOW  ", color: "#c8ddff" },
+      { text: "▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔", color: "#ffe8c8" },
     ],
   },
 };

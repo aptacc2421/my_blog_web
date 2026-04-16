@@ -15,12 +15,11 @@ import { getAtmosphereDef, type AtmosphereId } from "./themes";
 
 const TITLE_MENU_ORDER = MENU_ORDER.filter((id) => id !== "home");
 
-const LAWN_BOOT_HOME = `Checking sprinkler system .......... OK
-Packing seed slots [1][2][3][4] ... OK
-Soil moisture ...................... comfy
-Sun clock .......................... bright
+const TITLE_BOOT_HOME = `SELF-CHECK ........................... OK
+MEMORY MAP ........................... OK
+CHAPTER SELECT ....................... [1][2][3][4]
 
-Tip: number keys pick a row, like grabbing a seed packet.`;
+Tip: number keys jump like an old game menu; mouse also works.`;
 
 function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
   const { banner } = getAtmosphereDef(atmosphere);
@@ -39,37 +38,39 @@ function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
   );
 }
 
-function LawnBootHome() {
+function TitleBootHome() {
   return (
-    <pre className="pvz-boot" aria-hidden="true">
-      {LAWN_BOOT_HOME}
+    <pre className="title-screen__boot" aria-hidden="true">
+      {TITLE_BOOT_HOME}
     </pre>
   );
 }
 
 function TitleScreen({ onPick }: { onPick: (id: MenuViewId) => void }) {
   const { system } = site;
+  const boxW = 45;
+  const row = (text: string) => {
+    const t =
+      text.length > boxW ? text.slice(0, boxW) : text.padEnd(boxW, " ");
+    return `║${t}║`;
+  };
+  const mid = `  ${system.name}  //  ${system.host}  //  v${system.version}  `;
   return (
-    <section className="title-screen pvz-title" aria-labelledby="title-main">
-      <div className="pvz-title__sky" aria-hidden="true">
-        <span className="pvz-title__sun" />
-        <span className="pvz-title__cloud pvz-title__cloud--a" />
-        <span className="pvz-title__cloud pvz-title__cloud--b" />
-      </div>
-      <div className="pvz-title__sign">
-        <p className="pvz-title__kicker">
-          BACKYARD.EXE · {system.host} · v{system.version}
-        </p>
-        <h1 id="title-main" className="pvz-title__logo">
-          {site.name}
-        </h1>
-        <p className="pvz-title__role">{site.role}</p>
-        <p className="pvz-title__tag">{site.tagline}</p>
-      </div>
-      <p className="pvz-title__hint" aria-hidden="true">
-        选一包种子出发 — 按键盘 1 2 3 4 或点击下面一行
+    <section className="title-screen title-screen--atlas" aria-labelledby="title-main">
+      <pre className="title-screen__marquee" aria-hidden="true">
+        {`╔${"═".repeat(18)}  TITLE  ${"═".repeat(18)}╗
+${row(mid)}
+╚${"═".repeat(boxW)}╝`}
+      </pre>
+      <h1 id="title-main" className="title-screen__name">
+        {site.name}
+      </h1>
+      <p className="title-screen__role">{site.role}</p>
+      <p className="title-screen__tag">{site.tagline}</p>
+      <p className="title-screen__prompt" aria-hidden="true">
+        ▶ 选择章节 — 键盘 1–4 或点击（切栏目会换背景氛围）
       </p>
-      <nav className="title-menu title-menu--pvz" aria-label="开始菜单">
+      <nav className="title-menu title-menu--chapter" aria-label="开始菜单">
         {TITLE_MENU_ORDER.map((id, i) => (
           <button
             key={id}
@@ -80,12 +81,12 @@ function TitleScreen({ onPick }: { onPick: (id: MenuViewId) => void }) {
             <span className="title-menu__idx">{i + 1}</span>
             <span className="title-menu__lbl">{MENU_DEF[id].tab}</span>
             <span className="title-menu__chev" aria-hidden="true">
-              ▶
+              &gt;&gt;
             </span>
           </button>
         ))}
       </nav>
-      <LawnBootHome />
+      <TitleBootHome />
     </section>
   );
 }
@@ -151,28 +152,25 @@ function App() {
     <div className="shell">
       <AsciiBackdrop atmosphere={atm} />
       <div className="shell-front">
-      <nav
-        className={`nav nav--pvz${menuView === "home" ? " nav--pvz-home" : ""}`}
-        aria-label={menuView === "home" ? "小院标题画面提示" : "当前页面提示"}
-      >
+      <nav className="nav nav--shell" aria-label="站点状态">
         <div className="nav__cloud-line">
           <span className="nav__cloud-badge">
-            {menuView === "home" ? "[小院]" : `[${MENU_DEF[menuView].tab}]`}
+            {menuView === "home" ? "[TITLE]" : `[${MENU_DEF[menuView].tab}]`}
           </span>
           <span className="nav__cloud-user">{site.name}</span>
           <span>@</span>
           <span className="nav__cloud-host">{system.host}</span>
-          <span className="nav__cloud-tilde"> · </span>
+          <span className="nav__cloud-tilde">:~$ </span>
           <span className="nav__cloud-hint">
             {menuView === "home"
-              ? "欢迎回来，先在下面选一栏再进后院"
-              : "想回标题画面请看页脚「MAIN MENU」"}
+              ? "title_screen — 选章节进入；意象在背景与装饰条"
+              : "子页面 · 页脚可回标题画面"}
           </span>
         </div>
       </nav>
 
       {menuView !== "home" ? (
-        <div className="atm-toolbar" role="tablist" aria-label="关卡切换">
+        <div className="atm-toolbar" role="tablist" aria-label="章节切换">
           <button
             type="button"
             className="atm-tab atm-tab--home"
@@ -181,7 +179,7 @@ function App() {
             « MAIN MENU
           </button>
           <span className="atm-toolbar__prompt" aria-hidden="true">
-            $ pick --level
+            $ menu --select
           </span>
           <div className="atm-toolbar__tabs">
             {MENU_ORDER.map((id) => (
@@ -202,10 +200,7 @@ function App() {
         </div>
       ) : null}
 
-      <div
-        className={`frame${menuView === "home" ? " frame--pvz-home" : ""}`}
-        role="presentation"
-      >
+      <div className="frame" role="presentation">
         <div className="frame__bar">
           <span className="frame__bar-left">
             <strong>{system.name}</strong> // v{system.version} //{" "}

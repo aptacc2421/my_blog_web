@@ -1,5 +1,5 @@
 /**
- * 视图 id：`home` = 标题画面（开始菜单）；其余栏目在子页面切换。
+ * 视图 id：`home` = 标题画面（类老游戏的章节选择）；其余栏目切换 `body[data-atmosphere]` 龙族式意象底。
  * `document.body.dataset.menuView` 与 `index.css` 里各 `[data-menu-view]` 字体栈对应。
  *
  * 扩展新栏目（例如「相册」「友链」）：
