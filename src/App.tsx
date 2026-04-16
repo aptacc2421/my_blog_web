@@ -15,15 +15,12 @@ import { getAtmosphereDef, type AtmosphereId } from "./themes";
 
 const TITLE_MENU_ORDER = MENU_ORDER.filter((id) => id !== "home");
 
-const CLOUD_SHELL_HOME = `Welcome to Cloud Shell! (offline mock — no network calls)
-Type "help", "docs", or "exit". Machine image: debian/terminal/pixel-1
-Provisioning your container... done.
-Updating gcloud components... suppressed (--quiet).
+const LAWN_BOOT_HOME = `Checking sprinkler system .......... OK
+Packing seed slots [1][2][3][4] ... OK
+Soil moisture ...................... comfy
+Sun clock .......................... bright
 
-user@cloudshell:~ (site-local)$ gcloud config set project ${site.system.name.toLowerCase()} --quiet
-Updated property [core/project].
-
-user@cloudshell:~ (site-local)$ _`;
+Tip: number keys pick a row, like grabbing a seed packet.`;
 
 function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
   const { banner } = getAtmosphereDef(atmosphere);
@@ -42,39 +39,37 @@ function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
   );
 }
 
-function CloudShellHome() {
+function LawnBootHome() {
   return (
-    <pre className="cloud-shell cloud-shell--home" aria-hidden="true">
-      {CLOUD_SHELL_HOME}
+    <pre className="pvz-boot" aria-hidden="true">
+      {LAWN_BOOT_HOME}
     </pre>
   );
 }
 
 function TitleScreen({ onPick }: { onPick: (id: MenuViewId) => void }) {
   const { system } = site;
-  const boxW = 45;
-  const row = (text: string) => {
-    const t =
-      text.length > boxW ? text.slice(0, boxW) : text.padEnd(boxW, " ");
-    return `║${t}║`;
-  };
-  const mid = `  ${system.name}  //  ${system.host}  //  v${system.version}  `;
   return (
-    <section className="title-screen" aria-labelledby="title-main">
-      <pre className="title-screen__marquee" aria-hidden="true">
-        {`╔${"═".repeat(18)}  TITLE  ${"═".repeat(18)}╗
-${row(mid)}
-╚${"═".repeat(boxW)}╝`}
-      </pre>
-      <h1 id="title-main" className="title-screen__name">
-        {site.name}
-      </h1>
-      <p className="title-screen__role">{site.role}</p>
-      <p className="title-screen__tag">{site.tagline}</p>
-      <p className="title-screen__prompt" aria-hidden="true">
-        ▶ SELECT STAGE — press 1–4 or click
+    <section className="title-screen pvz-title" aria-labelledby="title-main">
+      <div className="pvz-title__sky" aria-hidden="true">
+        <span className="pvz-title__sun" />
+        <span className="pvz-title__cloud pvz-title__cloud--a" />
+        <span className="pvz-title__cloud pvz-title__cloud--b" />
+      </div>
+      <div className="pvz-title__sign">
+        <p className="pvz-title__kicker">
+          BACKYARD.EXE · {system.host} · v{system.version}
+        </p>
+        <h1 id="title-main" className="pvz-title__logo">
+          {site.name}
+        </h1>
+        <p className="pvz-title__role">{site.role}</p>
+        <p className="pvz-title__tag">{site.tagline}</p>
+      </div>
+      <p className="pvz-title__hint" aria-hidden="true">
+        选一包种子出发 — 按键盘 1 2 3 4 或点击下面一行
       </p>
-      <nav className="title-menu" aria-label="开始菜单">
+      <nav className="title-menu title-menu--pvz" aria-label="开始菜单">
         {TITLE_MENU_ORDER.map((id, i) => (
           <button
             key={id}
@@ -85,12 +80,12 @@ ${row(mid)}
             <span className="title-menu__idx">{i + 1}</span>
             <span className="title-menu__lbl">{MENU_DEF[id].tab}</span>
             <span className="title-menu__chev" aria-hidden="true">
-              &gt;&gt;
+              ▶
             </span>
           </button>
         ))}
       </nav>
-      <CloudShellHome />
+      <LawnBootHome />
     </section>
   );
 }
@@ -156,17 +151,22 @@ function App() {
     <div className="shell">
       <AsciiBackdrop atmosphere={atm} />
       <div className="shell-front">
-      <nav className="nav nav--cloud" aria-label="Cloud Shell 风格提示">
+      <nav
+        className={`nav nav--pvz${menuView === "home" ? " nav--pvz-home" : ""}`}
+        aria-label={menuView === "home" ? "小院标题画面提示" : "当前页面提示"}
+      >
         <div className="nav__cloud-line">
-          <span className="nav__cloud-badge">[cloudshell:{menuView}]</span>
+          <span className="nav__cloud-badge">
+            {menuView === "home" ? "[小院]" : `[${MENU_DEF[menuView].tab}]`}
+          </span>
           <span className="nav__cloud-user">{site.name}</span>
           <span>@</span>
           <span className="nav__cloud-host">{system.host}</span>
-          <span className="nav__cloud-tilde">:~$</span>
+          <span className="nav__cloud-tilde"> · </span>
           <span className="nav__cloud-hint">
             {menuView === "home"
-              ? " gcloud interactive — pick a stage below"
-              : ` stage=${MENU_DEF[menuView].tab} · footer has « MAIN MENU`}
+              ? "欢迎回来，先在下面选一栏再进后院"
+              : "想回标题画面请看页脚「MAIN MENU」"}
           </span>
         </div>
       </nav>
@@ -181,7 +181,7 @@ function App() {
             « MAIN MENU
           </button>
           <span className="atm-toolbar__prompt" aria-hidden="true">
-            $ gcloud alpha menu select
+            $ pick --level
           </span>
           <div className="atm-toolbar__tabs">
             {MENU_ORDER.map((id) => (
@@ -202,7 +202,10 @@ function App() {
         </div>
       ) : null}
 
-      <div className="frame" role="presentation">
+      <div
+        className={`frame${menuView === "home" ? " frame--pvz-home" : ""}`}
+        role="presentation"
+      >
         <div className="frame__bar">
           <span className="frame__bar-left">
             <strong>{system.name}</strong> // v{system.version} //{" "}

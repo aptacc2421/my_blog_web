@@ -1,107 +1,116 @@
 /**
- * 仅保留暗色底 + 雨丝；主视觉为 src/asciiScenes.ts 的字符画（AsciiBackdrop）。
+ * 氛围 = 天空 / 草地 / 纸张色调（偏休闲老游戏，非赛博雨夜）。
+ * 主装饰仍为 AsciiBackdrop；此处只做大面积底色与轻纹理。
  */
 body[data-atmosphere="default"] {
-  background-color: #030806;
-  background-image: radial-gradient(
-    ellipse 100% 80% at 50% 100%,
-    rgba(20, 50, 40, 0.35),
-    transparent 55%
+  background-color: var(--pvz-grass-dark, #558b2f);
+  background-image: linear-gradient(
+    180deg,
+    #87bfe8 0%,
+    #b8dff4 22%,
+    #c8e8a8 38%,
+    #8bc34a 58%,
+    #689f38 78%,
+    #4a7a2e 100%
   );
   background-attachment: fixed;
 }
 
 body[data-atmosphere="default"]::before {
-  opacity: 0.14;
+  opacity: 0.06;
   background-image: repeating-linear-gradient(
-    -19deg,
+    0deg,
     transparent,
-    transparent 5px,
-    rgba(170, 198, 230, 0.05) 5px,
-    rgba(170, 198, 230, 0.05) 6px
+    transparent 3px,
+    rgba(255, 255, 255, 0.04) 3px,
+    rgba(255, 255, 255, 0.04) 4px
   );
 }
 
 body[data-atmosphere="storm"] {
-  background-color: #020408;
-  background-image: radial-gradient(
-    ellipse 90% 70% at 50% 0%,
-    rgba(40, 70, 110, 0.25),
-    transparent 50%
+  background-color: #4a5560;
+  background-image: linear-gradient(
+    180deg,
+    #7a8a9a 0%,
+    #5c6875 35%,
+    #3d454e 100%
   );
   background-attachment: fixed;
 }
 
 body[data-atmosphere="storm"]::before {
-  opacity: 0.22;
+  opacity: 0.1;
   background-image: repeating-linear-gradient(
-    -21deg,
+    -18deg,
     transparent,
-    transparent 4px,
-    rgba(130, 160, 195, 0.07) 4px,
-    rgba(130, 160, 195, 0.07) 5px
+    transparent 5px,
+    rgba(255, 255, 255, 0.05) 5px,
+    rgba(255, 255, 255, 0.05) 6px
   );
 }
 
 body[data-atmosphere="midsummer"] {
-  background-color: #0a0604;
-  background-image: radial-gradient(
-    ellipse 80% 60% at 30% 0%,
-    rgba(180, 90, 30, 0.2),
-    transparent 50%
+  background-color: #6d4c38;
+  background-image: linear-gradient(
+    180deg,
+    #ffb74d 0%,
+    #ffcc80 25%,
+    #d4a574 55%,
+    #8d6e63 100%
   );
   background-attachment: fixed;
 }
 
 body[data-atmosphere="midsummer"]::before {
-  opacity: 0.06;
+  opacity: 0.05;
   background-image: repeating-linear-gradient(
-    -18deg,
+    -12deg,
     transparent,
-    transparent 7px,
-    rgba(255, 200, 120, 0.04) 7px,
-    rgba(255, 200, 120, 0.04) 8px
+    transparent 8px,
+    rgba(255, 220, 160, 0.06) 8px,
+    rgba(255, 220, 160, 0.06) 9px
   );
 }
 
 body[data-atmosphere="redwell"] {
-  background-color: #050102;
+  background-color: #3e2723;
   background-image: radial-gradient(
-    ellipse 55% 55% at 50% 60%,
-    rgba(90, 10, 24, 0.35),
-    transparent 60%
+    ellipse 70% 55% at 50% 70%,
+    rgba(120, 50, 45, 0.35),
+    transparent 55%
   );
   background-attachment: fixed;
 }
 
 body[data-atmosphere="redwell"]::before {
-  opacity: 0.1;
+  opacity: 0.06;
   background-image: repeating-linear-gradient(
-    -17deg,
+    -16deg,
     transparent,
     transparent 6px,
-    rgba(200, 80, 90, 0.04) 6px,
-    rgba(200, 80, 90, 0.04) 7px
+    rgba(255, 180, 140, 0.04) 6px,
+    rgba(255, 180, 140, 0.04) 7px
   );
 }
 
 body[data-atmosphere="window"] {
-  background-color: #05060a;
+  background-color: #37474f;
   background-image: linear-gradient(
     180deg,
-    rgba(40, 50, 70, 0.2) 0%,
-    transparent 35%
+    #546e7a 0%,
+    #455a64 40%,
+    #263238 100%
   );
   background-attachment: fixed;
 }
 
 body[data-atmosphere="window"]::before {
-  opacity: 0.1;
+  opacity: 0.07;
   background-image: repeating-linear-gradient(
     -20deg,
     transparent,
     transparent 6px,
-    rgba(180, 200, 230, 0.04) 6px,
-    rgba(180, 200, 230, 0.04) 7px
+    rgba(200, 230, 255, 0.05) 6px,
+    rgba(200, 230, 255, 0.05) 7px
   );
 }

@@ -1,25 +1,32 @@
 :root {
-  --bg: #06080d;
-  --bg-panel: #0a0e14;
-  --surface: #0c1218;
-  --border: rgba(57, 255, 122, 0.18);
-  --border-dim: rgba(57, 255, 122, 0.09);
-  --text: #dce8e4;
-  --text-muted: #6a7d78;
-  --phosphor: #3ee89a;
-  --phosphor-dim: rgba(62, 232, 154, 0.6);
-  --blood: #7a1528;
-  --blood-glow: rgba(160, 30, 55, 0.22);
-  --gold: #d4a84b;
-  --gold-dim: rgba(212, 168, 75, 0.2);
-  --window-glow: rgba(255, 236, 210, 0.12);
-  --tokyo-blue: rgba(90, 120, 160, 0.14);
+  /* 复古卡通风：草坪、木色、卡纸，避免霓虹赛博 */
+  --bg: #3e3226;
+  --bg-panel: #4a3d2f;
+  --surface: #524433;
+  --border: rgba(45, 32, 20, 0.55);
+  --border-dim: rgba(45, 32, 20, 0.28);
+  --text: #f8edd4;
+  --text-muted: #c9a882;
+  --phosphor: #7cb342;
+  --phosphor-dim: rgba(124, 179, 66, 0.75);
+  --blood: #8d3e2a;
+  --blood-glow: rgba(180, 80, 50, 0.22);
+  --gold: #ffb74d;
+  --gold-dim: rgba(255, 183, 77, 0.25);
+  --window-glow: rgba(255, 248, 220, 0.18);
+  --tokyo-blue: rgba(120, 170, 210, 0.12);
   --font-mono: ui-monospace, "Cascadia Mono", "Cascadia Code", "SFMono-Regular",
     Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-ui: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     "Noto Sans CJK SC", system-ui, sans-serif;
-  --glow: 0 0 18px rgba(57, 255, 122, 0.22);
-  --radius: 0;
+  --glow: 0 2px 0 rgba(30, 20, 12, 0.35);
+  --radius: 4px;
+  --pvz-sky: #7ec8e3;
+  --pvz-grass-mid: #7cb342;
+  --pvz-grass-dark: #558b2f;
+  --pvz-cream: #fff8e7;
+  --pvz-wood: #5d4037;
+  --pvz-soil: #3e2723;
 }
 
 *,
@@ -54,7 +61,7 @@ body::before {
   background-image: none;
 }
 
-/* CRT 扫描线：全局保留一点「终端」感 */
+/* 极轻扫描线；开始界面几乎关掉 */
 body::after {
   content: "";
   position: fixed;
@@ -63,12 +70,17 @@ body::after {
   z-index: 3;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.13),
-    rgba(0, 0, 0, 0.13) 1px,
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.08) 1px,
     transparent 1px,
     transparent 3px
   );
   mix-blend-mode: multiply;
+  opacity: 0.45;
+}
+
+body[data-menu-view="home"]::after {
+  opacity: 0.08;
 }
 
 #root {
@@ -83,8 +95,8 @@ a {
 }
 
 a:hover {
-  color: var(--phosphor);
-  text-shadow: var(--glow);
+  color: var(--gold);
+  text-shadow: none;
 }
 
 code,
@@ -100,8 +112,8 @@ img {
 }
 
 ::selection {
-  background: rgba(57, 255, 122, 0.28);
-  color: var(--text);
+  background: rgba(255, 183, 77, 0.35);
+  color: var(--pvz-soil);
 }
 
 /* 各栏目字体壳：仅系统栈，无外联字体 */
@@ -111,6 +123,7 @@ body[data-menu-view="home"] {
   --font-mono: ui-monospace, "Cascadia Mono", "Cascadia Code", "SFMono-Regular",
     Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
 body[data-menu-view="about"] {
