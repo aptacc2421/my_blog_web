@@ -6,7 +6,7 @@ import {
   MENU_STORAGE_KEY,
   MENU_DEF,
   atmosphereForMenu,
-  isMenuViewId,
+  readInitialMenuView,
   type MenuViewId,
 } from "./menu";
 import { AsciiBackdrop } from "./AsciiBackdrop";
@@ -15,11 +15,11 @@ import { getAtmosphereDef, type AtmosphereId } from "./themes";
 
 const TITLE_MENU_ORDER = MENU_ORDER.filter((id) => id !== "home");
 
-const TITLE_BOOT_HOME = `SELF-CHECK ........................... OK
-MEMORY MAP ........................... OK
-CHAPTER SELECT ....................... [1][2][3][4]
+const TITLE_BOOT_HOME = `* SELF-CHECK ......................... OK
+* MEMORY MAP ......................... OK
+* CHAPTER SELECT ..................... [1][2][3][4]
 
-Tip: number keys jump like an old game menu; mouse also works.`;
+* ↑↓ 移动光标 · Enter 或 Z 确认 · 数字键直达`;
 
 function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
   const { banner } = getAtmosphereDef(atmosphere);
@@ -28,8 +28,7 @@ function TermBanner({ atmosphere }: { atmosphere: AtmosphereId }) {
       {banner.map((line, i) => (
         <span
           key={i}
-          className="term-banner__line"
-          style={{ color: line.color }}
+          className={`term-banner__line term-banner__line--${line.tone}`}
         >
           {line.text}
         </span>
@@ -46,7 +45,15 @@ function TitleBootHome() {
   );
 }
 
-function TitleScreen({ onPick }: { onPick: (id: MenuViewId) => void }) {
+function TitleScreen({
+  cursorIndex,
+  setCursorIndex,
+  onPick,
+}: {
+  cursorIndex: number;
+  setCursorIndex: (i: number) => void;
+  onPick: (id: MenuViewId) => void;
+}) {
   const { system } = site;
   const boxW = 45;
   const row = (text: string) => {
@@ -68,20 +75,33 @@ ${row(mid)}
       <p className="title-screen__role">{site.role}</p>
       <p className="title-screen__tag">{site.tagline}</p>
       <p className="title-screen__prompt" aria-hidden="true">
-        ▶ 选择章节 — 键盘 1–4 或点击（切栏目会换背景氛围）
+        * 选择一章 — ↑↓ 移动 · Enter / Z 确认 · 1–4 直达 · 鼠标同步光标
       </p>
-      <nav className="title-menu title-menu--chapter" aria-label="开始菜单">
+      <nav
+        className="title-menu title-menu--chapter title-menu--soul"
+        aria-label="开始菜单"
+      >
         {TITLE_MENU_ORDER.map((id, i) => (
           <button
             key={id}
             type="button"
-            className="title-menu__btn"
+            className={
+              cursorIndex === i
+                ? "title-menu__btn title-menu__btn--cursor"
+                : "title-menu__btn"
+            }
+            aria-current={cursorIndex === i ? "true" : undefined}
+            onMouseEnter={() => setCursorIndex(i)}
+            onFocus={() => setCursorIndex(i)}
             onClick={() => onPick(id)}
           >
+            <span className="title-menu__soul" aria-hidden="true">
+              {cursorIndex === i ? "♥" : "\u00a0"}
+            </span>
             <span className="title-menu__idx">{i + 1}</span>
             <span className="title-menu__lbl">{MENU_DEF[id].tab}</span>
             <span className="title-menu__chev" aria-hidden="true">
-              &gt;&gt;
+              *
             </span>
           </button>
         ))}
@@ -91,23 +111,11 @@ ${row(mid)}
   );
 }
 
-function readMenuView(): MenuViewId {
-  if (typeof window === "undefined") return "home";
-  const h = window.location.hash.replace(/^#/, "");
-  if (h && isMenuViewId(h)) return h;
-  try {
-    const m = localStorage.getItem(MENU_STORAGE_KEY);
-    if (m && isMenuViewId(m)) return m;
-  } catch {
-    /* ignore */
-  }
-  return "home";
-}
-
 function App() {
   const year = new Date().getFullYear();
   const { system, bootLog, sections, status } = site;
-  const [menuView, setMenuView] = useState<MenuViewId>(readMenuView);
+  const [menuView, setMenuView] = useState<MenuViewId>(readInitialMenuView);
+  const [titleCursor, setTitleCursor] = useState(0);
 
   const goMenu = useCallback((id: MenuViewId) => {
     setMenuView(id);
@@ -125,26 +133,41 @@ function App() {
   }, [menuView]);
 
   useEffect(() => {
+    if (menuView === "home") setTitleCursor(0);
+  }, [menuView]);
+
+  useEffect(() => {
     if (menuView !== "home") return;
+    const nOpts = TITLE_MENU_ORDER.length;
     const onKey = (e: KeyboardEvent) => {
       const t = e.target;
       if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
         return;
       }
-      const n = Number.parseInt(e.key, 10);
-      if (
-        Number.isNaN(n) ||
-        n < 1 ||
-        n > TITLE_MENU_ORDER.length
-      ) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setTitleCursor((c) => (c + 1) % nOpts);
         return;
       }
-      e.preventDefault();
-      goMenu(TITLE_MENU_ORDER[n - 1]!);
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setTitleCursor((c) => (c - 1 + nOpts) % nOpts);
+        return;
+      }
+      if (e.key === "Enter" || e.key === "z" || e.key === "Z") {
+        e.preventDefault();
+        goMenu(TITLE_MENU_ORDER[titleCursor]!);
+        return;
+      }
+      const n = Number.parseInt(e.key, 10);
+      if (!Number.isNaN(n) && n >= 1 && n <= nOpts) {
+        e.preventDefault();
+        goMenu(TITLE_MENU_ORDER[n - 1]!);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [menuView, goMenu]);
+  }, [menuView, goMenu, titleCursor]);
 
   const atm = atmosphereForMenu(menuView);
 
@@ -218,8 +241,14 @@ function App() {
             <div className="window-horizon" aria-hidden="true" />
           )}
 
-          <main id="top" className="menu-main">
-            {menuView === "home" && <TitleScreen onPick={goMenu} />}
+          <main id="top" key={menuView} className="menu-main menu-main--ut-fade">
+            {menuView === "home" && (
+              <TitleScreen
+                cursorIndex={titleCursor}
+                setCursorIndex={setTitleCursor}
+                onPick={goMenu}
+              />
+            )}
 
             {menuView === "about" && (
               <section

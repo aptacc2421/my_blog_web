@@ -14,11 +14,14 @@ export const ATMOSPHERE_ORDER: AtmosphereId[] = [
   "window",
 ];
 
-export type BannerLine = { text: string; color: string };
+/** 装饰条用 tone 上色，颜色随 body[data-atmosphere] 在 themes.css 里变 */
+export type BannerTone = "edge" | "mid";
+
+export type BannerLine = { text: string; tone: BannerTone };
 
 export type AtmosphereDef = {
   tab: string;
-  /** 装饰条：意象在背景与 Ascii，此处仅占一行氛围，正文仍保持克制 */
+  /** 装饰条：意象在背景与 Ascii；颜色走 CSS 变量 --phosphor / --gold */
   banner: BannerLine[];
 };
 
@@ -26,41 +29,41 @@ export const ATMOSPHERE_DEF: Record<AtmosphereId, AtmosphereDef> = {
   default: {
     tab: "RAIN",
     banner: [
-      { text: "╔══════════════════════════════════════╗", color: "#4db892" },
-      { text: "║   NIGHT LINK · TOKYO / GLASS REFL.   ║", color: "#9fd4ff" },
-      { text: "╚══════════════════════════════════════╝", color: "#3a9f7a" },
+      { text: "╔══════════════════════════════════════╗", tone: "edge" },
+      { text: "║   NIGHT LINK · TOKYO / GLASS REFL.   ║", tone: "mid" },
+      { text: "╚══════════════════════════════════════╝", tone: "edge" },
     ],
   },
   storm: {
     tab: "STORM",
     banner: [
-      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#4a6a8a" },
-      { text: "  HEAVY RAIN · LOW VIS · WET STREET   ", color: "#b8d4f0" },
-      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", color: "#3a5a78" },
+      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", tone: "edge" },
+      { text: "  HEAVY RAIN · LOW VIS · WET STREET   ", tone: "mid" },
+      { text: "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", tone: "edge" },
     ],
   },
   midsummer: {
     tab: "RUN",
     banner: [
-      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#e89a4a" },
-      { text: "  MIDSUMMER ROAD · HEAT HAZE · ESCAPE  ", color: "#ffe9a8" },
-      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", color: "#c86a30" },
+      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", tone: "edge" },
+      { text: "  MIDSUMMER ROAD · HEAT HAZE · ESCAPE  ", tone: "mid" },
+      { text: "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈", tone: "edge" },
     ],
   },
   redwell: {
     tab: "WELL",
     banner: [
-      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#5a1820" },
-      { text: "  DEEP RED · SUBWAY STEAM · WARNING    ", color: "#ff8a8a" },
-      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", color: "#3a080c" },
+      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", tone: "edge" },
+      { text: "  DEEP RED · SUBWAY STEAM · WARNING    ", tone: "mid" },
+      { text: "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░", tone: "edge" },
     ],
   },
   window: {
     tab: "GLASS",
     banner: [
-      { text: "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁", color: "#fff3dc" },
-      { text: "  FLOOR-TO-CEILING · CITY GLOW BELOW  ", color: "#c8ddff" },
-      { text: "▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔", color: "#ffe8c8" },
+      { text: "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁", tone: "edge" },
+      { text: "  FLOOR-TO-CEILING · CITY GLOW BELOW  ", tone: "mid" },
+      { text: "▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔", tone: "edge" },
     ],
   },
 };

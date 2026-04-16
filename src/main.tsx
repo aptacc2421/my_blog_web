@@ -3,17 +3,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import "./themes.css";
 import App from "./App";
-import {
-  MENU_STORAGE_KEY,
-  atmosphereForMenu,
-  isMenuViewId,
-} from "./menu";
+import { atmosphereForMenu, readInitialMenuView } from "./menu";
 
 try {
-  const m = localStorage.getItem(MENU_STORAGE_KEY);
-  if (m && isMenuViewId(m)) {
-    document.body.dataset.atmosphere = atmosphereForMenu(m);
-  }
+  const m = readInitialMenuView();
+  document.body.dataset.atmosphere = atmosphereForMenu(m);
+  document.body.dataset.menuView = m;
 } catch {
   /* private mode etc. */
 }

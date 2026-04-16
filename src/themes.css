@@ -106,3 +106,87 @@ body[data-atmosphere="window"]::before {
     rgba(180, 200, 230, 0.04) 7px
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* 随栏目切换的氛围：主题色 + 装饰条用色 + 顶栏/章节标题「格式」变量   */
+/* ------------------------------------------------------------------ */
+
+body[data-atmosphere="default"] {
+  --phosphor: #52d4a8;
+  --phosphor-dim: rgba(82, 212, 168, 0.55);
+  --gold: #e6cf8f;
+  --text: #dce8e4;
+  --text-muted: #6a7d78;
+  --border: rgba(72, 200, 160, 0.18);
+  --border-dim: rgba(72, 200, 160, 0.09);
+  --glow: 0 0 14px rgba(82, 212, 168, 0.16);
+  --menu-soul: #e02020;
+  --ui-toolbar-transform: uppercase;
+  --ui-toolbar-tracking: 0.06em;
+  --ui-heading-transform: none;
+  --ui-heading-tracking: 0.04em;
+}
+
+body[data-atmosphere="storm"] {
+  --phosphor: #8ec8ff;
+  --phosphor-dim: rgba(142, 200, 255, 0.55);
+  --gold: #c8dff5;
+  --text: #dce6f0;
+  --text-muted: #7a8fa8;
+  --border: rgba(140, 180, 230, 0.2);
+  --border-dim: rgba(140, 180, 230, 0.1);
+  --glow: 0 0 16px rgba(120, 175, 255, 0.14);
+  --menu-soul: #ff6b6b;
+  --ui-toolbar-transform: uppercase;
+  --ui-toolbar-tracking: 0.14em;
+  --ui-heading-transform: uppercase;
+  --ui-heading-tracking: 0.08em;
+}
+
+body[data-atmosphere="midsummer"] {
+  --phosphor: #ffb56b;
+  --phosphor-dim: rgba(255, 181, 107, 0.55);
+  --gold: #ffe566;
+  --text: #f2ebe4;
+  --text-muted: #b89a82;
+  --border: rgba(255, 190, 120, 0.2);
+  --border-dim: rgba(255, 190, 120, 0.1);
+  --glow: 0 0 14px rgba(255, 200, 120, 0.12);
+  --menu-soul: #ff4444;
+  --ui-toolbar-transform: none;
+  --ui-toolbar-tracking: 0.05em;
+  --ui-heading-transform: none;
+  --ui-heading-tracking: 0.12em;
+}
+
+body[data-atmosphere="redwell"] {
+  --phosphor: #ff8a9a;
+  --phosphor-dim: rgba(255, 138, 154, 0.55);
+  --gold: #ffc9c9;
+  --text: #ebe0e2;
+  --text-muted: #9a7a82;
+  --border: rgba(200, 80, 100, 0.22);
+  --border-dim: rgba(200, 80, 100, 0.11);
+  --glow: 0 0 16px rgba(255, 100, 120, 0.12);
+  --menu-soul: #ff3030;
+  --ui-toolbar-transform: uppercase;
+  --ui-toolbar-tracking: 0.1em;
+  --ui-heading-transform: none;
+  --ui-heading-tracking: 0.06em;
+}
+
+body[data-atmosphere="window"] {
+  --phosphor: #c5d4ff;
+  --phosphor-dim: rgba(197, 212, 255, 0.55);
+  --gold: #fff3cc;
+  --text: #e8ecf5;
+  --text-muted: #8a96b0;
+  --border: rgba(180, 200, 255, 0.18);
+  --border-dim: rgba(180, 200, 255, 0.09);
+  --glow: 0 0 14px rgba(200, 215, 255, 0.14);
+  --menu-soul: #ff5050;
+  --ui-toolbar-transform: none;
+  --ui-toolbar-tracking: 0.08em;
+  --ui-heading-transform: none;
+  --ui-heading-tracking: 0.02em;
+}

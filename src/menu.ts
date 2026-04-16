@@ -41,3 +41,17 @@ export function isMenuViewId(s: string): s is MenuViewId {
 export function atmosphereForMenu(view: MenuViewId): AtmosphereId {
   return MENU_DEF[view].atmosphere;
 }
+
+/** 与 App 首帧一致：hash 优先，其次 localStorage，默认 home */
+export function readInitialMenuView(): MenuViewId {
+  if (typeof window === "undefined") return "home";
+  const h = window.location.hash.replace(/^#/, "");
+  if (h && isMenuViewId(h)) return h;
+  try {
+    const m = localStorage.getItem(MENU_STORAGE_KEY);
+    if (m && isMenuViewId(m)) return m;
+  } catch {
+    /* ignore */
+  }
+  return "home";
+}

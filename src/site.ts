@@ -1,7 +1,7 @@
 /**
  * 内容策略（对齐需求）：
  * - 正文 / 简介 / 项目描述：正常、克制，可直接用于简历或对外介绍。
- * - 「龙族感」：由顶部「氛围」切换背景（见 themes.css / themes.ts），不占正文。
+ * - 「龙族感」：由栏目切换 body[data-atmosphere] 与 AsciiBackdrop（见 themes.css / themes.ts），不占正文。
  * - 终端感：system / bootLog / 命令式按钮与区块标题，仅作交互壳。
  */
 export const site = {
