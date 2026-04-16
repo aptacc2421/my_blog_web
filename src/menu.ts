@@ -1,5 +1,5 @@
 /**
- * 视图 id：`home` = 标题画面（类老游戏的章节选择）；其余栏目切换 `body[data-atmosphere]` 龙族式意象底。
+ * 视图 id：主导航在底部 Shell（cd / ls / …）；`home` 为 ~/；其余栏目切换 `body[data-atmosphere]` 龙族式意象底。
  * `document.body.dataset.menuView` 与 `index.css` 里各 `[data-menu-view]` 字体栈对应。
  *
  * 扩展新栏目（例如「相册」「友链」）：

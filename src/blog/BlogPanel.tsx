@@ -20,7 +20,7 @@ export function BlogPanel() {
       <div className="section__head">
         <p className="section__tag">博客</p>
         <h2 id="blog-title" className="section__title">
-          $ ls ./content/blog/*.md
+          ~/blog
         </h2>
         <p className="section__hint">
           在 <code>src/content/blog/</code> 添加 <code>.md</code>（顶部{" "}

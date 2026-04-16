@@ -122,6 +122,91 @@ body[data-menu-view="home"] .ascii-backdrop {
   padding: 0 0.85rem 0.85rem;
 }
 
+.frame__body--shell {
+  display: flex;
+  flex-direction: column;
+  min-height: min(78vh, 760px);
+  padding-bottom: 0.5rem;
+}
+
+.site-view {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-top: 0.15rem;
+}
+
+.home-shell-intro {
+  padding-top: 0.35rem;
+}
+
+.site-shell {
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  padding: 0.65rem 0.75rem 0.7rem;
+  border: 1px solid var(--border-dim);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.52);
+}
+
+.site-shell__output {
+  margin: 0 0 0.45rem;
+  max-height: 30vh;
+  overflow-y: auto;
+  padding: 0.45rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-dim);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.site-shell__line {
+  display: block;
+}
+
+.site-shell__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.site-shell__prompt {
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  white-space: pre;
+}
+
+.site-shell__input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  padding: 0.38rem 0.5rem;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--text);
+}
+
+.site-shell__input:focus {
+  outline: 1px solid var(--phosphor);
+  outline-offset: 1px;
+}
+
+.site-shell__hint {
+  margin: 0.4rem 0 0;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  opacity: 0.9;
+}
+
+
 /* 落地窗下的城市光带：极弱，不占叙事 */
 .window-horizon {
   height: 2px;
@@ -245,151 +330,6 @@ body[data-menu-view="home"] .menu-main {
 
 .menu-main--ut-fade {
   animation: ut-panel-in 0.32s ease-out;
-}
-
-/* 标题画面：老游戏「章节选择」壳 + 龙族式暗色底（无卡通杂烩） */
-.title-screen {
-  padding: 0.5rem 0 1.25rem;
-  text-align: center;
-}
-
-.title-screen__name {
-  margin: 0 0 0.35rem;
-  font-family: var(--font-ui);
-  font-size: clamp(1.35rem, 4vw, 1.85rem);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  color: var(--text);
-  text-shadow: 0 0 14px rgba(82, 212, 168, 0.12);
-}
-
-.title-screen__role {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-ui);
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.title-screen__tag {
-  margin: 0 auto 0.65rem;
-  max-width: 46ch;
-  font-family: var(--font-ui);
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: var(--text-muted);
-}
-
-.title-screen__prompt {
-  margin: 0 0 0.65rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--gold);
-  letter-spacing: 0.06em;
-}
-
-.title-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  max-width: 22rem;
-  margin: 0 auto 1rem;
-  text-align: left;
-}
-
-/* 类老游戏：条目有「按下」位移，配色仍跟雨夜终端 */
-.title-menu--chapter .title-menu__btn {
-  border: 2px solid var(--border);
-  border-radius: 0;
-  background: linear-gradient(180deg, rgba(16, 22, 18, 0.95), rgba(6, 10, 8, 0.92));
-  color: var(--text);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 3px 0 rgba(0, 0, 0, 0.45);
-  transition: border-color 0.1s ease, color 0.1s ease, transform 0.08s ease;
-}
-
-.title-menu--chapter .title-menu__btn:hover {
-  border-color: var(--phosphor);
-  color: var(--phosphor);
-}
-
-.title-menu--chapter .title-menu__btn:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.5),
-    inset 0 2px 6px rgba(0, 0, 0, 0.35);
-}
-
-.title-menu__btn {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  width: 100%;
-  padding: 0.55rem 0.65rem;
-  font-family: var(--font-ui);
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-}
-
-.title-menu--chapter .title-menu__idx {
-  flex: 0 0 1.35rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--blood);
-  text-align: center;
-  border: 1px solid var(--border-dim);
-  padding: 0.12rem 0;
-  background: rgba(0, 0, 0, 0.35);
-}
-
-.title-menu--chapter .title-menu__chev {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--gold);
-  opacity: 0.85;
-}
-
-.title-menu__lbl {
-  flex: 1 1 auto;
-}
-
-.title-menu__soul {
-  flex: 0 0 1.1rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  line-height: 1;
-  text-align: center;
-  color: var(--menu-soul, #e02020);
-}
-
-.title-menu__btn--cursor {
-  border-color: var(--phosphor) !important;
-  color: var(--phosphor);
-  box-shadow:
-    inset 3px 0 0 var(--menu-soul, #e02020),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 3px 0 rgba(0, 0, 0, 0.45);
-}
-
-.title-screen__boot {
-  margin: 0 auto;
-  max-width: 42rem;
-  padding: 0.55rem 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  line-height: 1.5;
-  text-align: left;
-  color: var(--text-muted);
-  border: 1px dashed var(--border-dim);
-  background: rgba(0, 0, 0, 0.42);
-  white-space: pre-wrap;
-  word-break: break-word;
 }
 
 /* 关于页顶：原首页 hero 迁入 */
